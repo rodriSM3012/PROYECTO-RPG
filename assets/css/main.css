@@ -202,3 +202,28 @@ section.command input {
   font-size: 1rem;
   font-family: "Open Sans", sans-serif;
 }
+
+main section.npc {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: auto;
+  object-position: center;
+}
+
+header {
+  z-index: 1;
+  position: relative;
+}
+
+main section.npc img {
+  display: block;
+  /* aspect-ratio: auto; */
+  object-fit: fill;
+  height: 80vh;
+}
+
+section.info ul.material img {
+  width: 40px;
+}
