@@ -1,2 +1,6 @@
 - [ ] poner flechas en amarillo oscuro
 - [ ] hacer mas pequeño seccion interact
+- [ ] hacer ui transparente?
+- [ ] poner iconos simples para atributos
+- [ ] boton de enviar en input ▶
+- [ ] hacer que la imagen del enemigo aparezca por debajo del header
