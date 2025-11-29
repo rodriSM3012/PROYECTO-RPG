@@ -1,0 +1,2 @@
+- [ ] poner flechas en amarillo oscuro
+- [ ] hacer mas pequeño seccion interact
