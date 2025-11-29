@@ -1,0 +1,124 @@
+body {
+  width: 100vw;
+  height: 100vh;
+  /* no quiero que la pagina tenga scroll de ningun tipo por eso pongo overflow hidden  */
+  overflow: hidden;
+  background-color: rgb(6, 14, 41);
+}
+
+header {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  margin: 1rem;
+}
+
+header section.logo {
+  width: 50%;
+  color: white;
+  font-family: "Cinzel Decorative", cursive;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+header nav {
+  display: flex;
+  justify-content: space-around;
+  width: 50%;
+  align-items: center;
+}
+
+header nav button {
+  padding: 5px;
+  font-family: "Macondo", cursive;
+  font-weight: 400;
+  font-size: 1.5rem;
+  color: #fff;
+  background-color: transparent;
+  border: 3px solid rgb(49, 75, 163);
+  border-radius: 10px;
+}
+
+header nav button:hover {
+  background-color: rgb(49, 75, 163);
+  transition: 0.3s;
+}
+
+section.background-img {
+  width: 100vw;
+  height: 66vh;
+  position: relative;
+}
+
+section.background-img img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+main div.interact {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  width: 100%;
+  height: 50vh;
+  position: absolute;
+  top: 50vh;
+}
+
+section.info {
+  background-color: rgb(139, 97, 41);
+  margin: 4vh;
+  padding: 3vh;
+  border-radius: 1rem;
+  color: white;
+  font-family: "Macondo", cursive;
+  font-size: 1.5rem;
+  border: 10px solid rgb(233, 187, 128);
+}
+
+section.info ul {
+  list-style-type: none;
+}
+
+section.info ul li a {
+  color: rgb(218, 195, 240);
+  text-decoration: none;
+}
+
+section.info ul li a:hover {
+  text-decoration: underline;
+}
+
+div.menu-container {
+  margin: auto;
+}
+
+section.menu {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  width: 30vh;
+  height: 30vh;
+}
+
+section.menu button.up {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+section.menu button.left {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+section.menu button.down {
+  grid-column: 2;
+  grid-row: 3;
+}
+
+section.menu button.right {
+  grid-column: 3;
+  grid-row: 2;
+}
