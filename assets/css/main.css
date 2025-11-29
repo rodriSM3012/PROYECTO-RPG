@@ -22,9 +22,11 @@ header section.logo {
 }
 
 header nav {
+  margin-right: 30px;
   display: flex;
-  justify-content: space-around;
-  width: 50%;
+  justify-content: right;
+  gap: 1rem;
+  width: 49%;
   align-items: center;
 }
 
@@ -87,6 +89,11 @@ section.info ul li a {
   text-decoration: none;
 }
 
+section.info h2 a {
+  text-decoration: none;
+  color: white;
+}
+
 section.info ul li a:hover {
   text-decoration: underline;
 }
@@ -101,6 +108,25 @@ section.menu {
   grid-template-rows: 1fr 1fr 1fr;
   width: 30vh;
   height: 30vh;
+  border: solid 10px rgb(160, 128, 85);
+  border-radius: 100%;
+  /* background-color: rgb(233, 187, 128); */
+  background: radial-gradient(
+    farthest-corner at 2rem 2rem,
+    rgb(255, 211, 155) 50%,
+    rgb(139, 97, 41),
+    rgb(63, 45, 22) 120%
+  );
+}
+
+section.menu button {
+  font-size: 3rem;
+  background-color: transparent;
+}
+
+section.menu button:hover {
+  transform: scale(1.5);
+  transition: 0.1s;
 }
 
 section.menu button.up {
@@ -121,4 +147,8 @@ section.menu button.down {
 section.menu button.right {
   grid-column: 3;
   grid-row: 2;
+}
+
+button {
+  cursor: pointer;
 }
