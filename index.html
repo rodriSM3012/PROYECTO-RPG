@@ -4,9 +4,59 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TAREA TEMA 4</title>
-    <link rel="stylesheet" href="./assets/css/styles.css" />
     <script src="./assets/js/game.js"></script>
+    <link rel="stylesheet" href="./assets/css/styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Macondo&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
+    <header>
+      <!-- seccion con titulo -->
+      <section class="logo">
+        <h1>PROYECTO RPG</h1>
+      </section>
+      <!-- seccion con botones de sistema -->
+      <nav>
+        <button onclick="">💾 Guardar</button>
+        <button onclick="">📂 Cargar</button>
+        <button onclick="">❓ Ayuda</button>
+      </nav>
+    </header>
+
+    <main>
+      <!-- seccion con imagen de fondo -->
+      <section class="background-img">
+        <img src="./assets/images/placeholder/Screenshot270.png" alt="" />
+      </section>
+      <div class="interact">
+        <!-- informacion del personaje y del enemigo -->
+        <section class="info">
+          <h2>Héroe</h2>
+          <ul>
+            <li><a href="#">Salud:</a> 30</li>
+            <li><a href="#">Fuerza:</a> 14 + 2</li>
+            <li><a href="#">Defensa:</a> 12 + 0</li>
+            <li><a href="#">Ubicación:</a> Orilla del Lago</li>
+            <!-- <li><span>Dinero:</span> 300</li> -->
+            <!-- <li><span>Pociones:</span> 3</li> -->
+          </ul>
+        </section>
+
+        <!-- input de comandos e historial  -->
+        <section class="command"></section>
+
+        <!-- menu direccional  -->
+        <div class="menu-container">
+          <section class="menu">
+            <button class="up">↑</button>
+            <button class="down">↓</button>
+            <button class="left">←</button>
+            <button class="right">→</button>
+          </section>
+        </div>
+      </div>
+    </main>
   </body>
 </html>
