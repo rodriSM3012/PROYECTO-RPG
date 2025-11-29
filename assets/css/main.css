@@ -15,7 +15,7 @@ header {
 
 header section.logo {
   width: 50%;
-  color: white;
+  color: rgb(204, 222, 255);
   font-family: "Cinzel Decorative", cursive;
   font-weight: 600;
   font-size: 1rem;
@@ -120,7 +120,7 @@ section.menu {
 }
 
 section.menu button {
-  font-size: 3rem;
+  font-size: 5vh;
   background-color: transparent;
 }
 
@@ -151,4 +151,54 @@ section.menu button.right {
 
 button {
   cursor: pointer;
+}
+
+section.command {
+  background-color: rgb(139, 97, 41);
+  margin: 4vh;
+  padding: 3vh;
+  border-radius: 1rem;
+  color: white;
+  font-family: "Macondo", cursive;
+  font-size: 1.5rem;
+  border: 10px solid rgb(233, 187, 128);
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  justify-content: space-between;
+}
+
+section.command div.history h2 {
+  font-size: 1.5rem;
+  font-weight: 100;
+  margin-bottom: 5px;
+}
+
+section.command div.history div {
+  background-color: rgb(255, 213, 159);
+  color: rgb(26, 26, 26);
+  padding: 1rem;
+  border-radius: 10px;
+}
+
+section.command div.history div ul {
+  list-style-type: none;
+  height: fit-content;
+  max-height: 21vh;
+  overflow: auto;
+  scrollbar-color: #ffd59f #c49961;
+}
+
+section.command div.history div ul li {
+  font-size: 1.1rem;
+  font-family: "Open Sans", sans-serif;
+  margin-bottom: 5px;
+}
+
+section.command input {
+  padding: 1vh;
+  border-radius: 10px;
+  background-color: antiquewhite;
+  font-size: 1rem;
+  font-family: "Open Sans", sans-serif;
 }
