@@ -6,8 +6,10 @@
     <title>TAREA TEMA 4</title>
     <script src="./assets/js/game.js"></script>
     <link rel="stylesheet" href="./assets/css/styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Macondo&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Macondo&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
       rel="stylesheet"
     />
   </head>
@@ -33,7 +35,7 @@
       <div class="interact">
         <!-- informacion del personaje y del enemigo -->
         <section class="info">
-          <h2>Héroe</h2>
+          <h2><a href="#">Héroe</a></h2>
           <ul>
             <li><a href="#">Salud:</a> 30</li>
             <li><a href="#">Fuerza:</a> 14 + 2</li>
@@ -45,7 +47,34 @@
         </section>
 
         <!-- input de comandos e historial  -->
-        <section class="command"></section>
+        <section class="command">
+          <div class="history">
+            <h2>Historial de eventos</h2>
+            <div>
+              <ul>
+                <li>Evento 1</li>
+                <li>Evento 2</li>
+                <li>Evento 3</li>
+                <li>Evento 4</li>
+                <li>Evento 5</li>
+                <li>Evento 6</li>
+                <li>Evento 7</li>
+                <li>Evento 8</li>
+                <li>Evento 9</li>
+                <li>Evento 10</li>
+                <li>Evento 11</li>
+                <li>Evento 12</li>
+                <li>Evento 13</li>
+              </ul>
+            </div>
+          </div>
+          <input
+            type="text"
+            id="command-input"
+            name="command-input"
+            placeholder="Escribe un comando"
+          />
+        </section>
 
         <!-- menu direccional  -->
         <div class="menu-container">
