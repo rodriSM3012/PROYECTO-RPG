@@ -1,2 +1,8 @@
 @import url(./reset.css);
 @import url(./main.css);
+@import url(./header+nav.css);
+@import url(./dpad-menu.css);
+@import url(./section-main.css);
+@import url(./section-mc.css);
+@import url(./section-npc.css);
+@import url(./section-input.css);

@@ -1,0 +1,55 @@
+/* estilo del header  */
+header {
+  /* el flex distribuye la seccion con el titulo/logo y el navbar  */
+  display: flex;
+  /* hace que exista el mayor espacio posible entre la seccion con el titulo/logo y el navbar */
+  justify-content: space-between;
+  /* anchura para que ocupe toda la pagina  */
+  /* width 100% ignora el margen derecho del header pero con width auto si lo tiene en cuenta*/
+  width: auto;
+  /* mueve el titulo ligeramente abajo para que este mas en el centro  */
+  align-items: center;
+  margin: 1rem;
+}
+
+/* estilo del titulo/logo  */
+header section.logo {
+  /* color del titulo */
+  color: rgb(204, 222, 255);
+  /* personalizacion de la fuente del titulo */
+  font-family: "Cinzel Decorative", cursive;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+/* estilo del navbar */
+header nav {
+  /* distribuye los botones del nav para que aparezca como una barra  */
+  display: flex;
+  /* establece un hueco entre los botones  */
+  gap: 1rem;
+}
+
+/* estilo de los botones del navbar  */
+header nav button {
+  /* aumenta el espacio que ocupan los botones  */
+  padding: 5px;
+  /* personalizacion de la fuente de los botones */
+  font-family: "Macondo", cursive;
+  font-weight: 400;
+  font-size: 1.5rem;
+  color: #fff;
+  /* elimina el fondo de los botones para que usen el mismo color que hay en el fondo  */
+  background-color: transparent;
+  /* establece el estilo del borde de los botones (color, anchura y curvatura)  */
+  border: 3px solid rgb(49, 75, 163);
+  border-radius: 10px;
+}
+
+/* establece el efecto de los botones cuando se pasa el raton por encima  */
+header nav button:hover {
+  /* cambia el color de fondo  */
+  background-color: rgb(49, 75, 163);
+  /* establece el tiempo que dura la transicion del efecto  */
+  transition: 0.3s;
+}

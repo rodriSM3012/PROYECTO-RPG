@@ -1,0 +1,43 @@
+/* estilo del contenedor con la imagen del enemigo  */
+main section.img-npc {
+  /* establece la posicion por encima de la imagen de fondo y por debajo de las secciones de interaccion e informacion */
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* establece la altura de la imagen del enemigo  */
+main section.img-npc img {
+  height: 80vh;
+}
+/* estilo de la seccion con informacion del enemigo */
+section.info-npc {
+  /* ajusta la posicion para que esté fuera y por encima de su contenedor  */
+  position: absolute;
+  top: -80%;
+  /* establece margen y relleno para generar espacio en los bordes  */
+  margin: 4vh;
+  padding: 3vh;
+  /* cambia el color de la letra  */
+  color: white;
+  /* cambia el tipo de letra  */
+  font-family: "Macondo", cursive;
+  /* cambia el tamaño de la letra  */
+  font-size: 1.5rem;
+  /* añade un efecto de sombra a las letras  */
+  text-shadow: 0 0 5px black, 0 0 10px black, 0 0 20px black, 0 0 40px black;
+  /* cambia la disposicion de los elementos para ordenarlos y generar espacio entre cada uno  */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2vh;
+}
+
+/* estilo del indicador de tipo de enemigo  */
+section.info-npc p {
+  /* cambia el color de la letra  */
+  color: rgb(255, 65, 65);
+  /* disminuye la distancia entre el nombre y el subtitulo con el tipo  */
+  margin-top: -20%;
+}

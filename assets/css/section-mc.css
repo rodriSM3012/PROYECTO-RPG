@@ -1,0 +1,10 @@
+/* establece el tamaño de las imagenes de dinero y pociones  */
+section.info-mc ul.object img {
+  width: 40px;
+}
+
+/* posiciona los contadores de dinero y pociones horizontalmente y para que ambos tengan el mismo espacio por los lados  */
+section.info-mc ul.object {
+  display: flex;
+  justify-content: space-around;
+}

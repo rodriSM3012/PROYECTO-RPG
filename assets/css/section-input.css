@@ -1,0 +1,51 @@
+/* estilo del titulo del historial  */
+section.command div.history h2 {
+  font-size: 1.5rem;
+  font-weight: 100;
+  margin-bottom: 5px;
+}
+
+/* estilo del historial  */
+section.command div.history div {
+  /* cambia el color de fondo y el de la letra */
+  background-color: rgb(255, 213, 159);
+  color: rgb(26, 26, 26);
+  /* añade relleno por los bordes  */
+  padding: 1rem;
+  /* redondea los bordes del menu  */
+  border-radius: 10px;
+}
+
+/* estilo de la lista de eventos del historial  */
+section.command div.history div ul {
+  /* establece la altura para la lista de eventos */
+  height: 21vh;
+  /* hace que si hay muchos elementos se oculten y solo se puedan ver al desplazar la scrollbar  */
+  overflow: auto;
+  /* cambia los colores de la scrollbar  */
+  scrollbar-color: rgb(255, 213, 159) #c49961;
+}
+
+/* estilo de cada elemento de la lista del historial  */
+section.command div.history div ul li {
+  /* cambia el tamaño de la letra  */
+  font-size: 1.1rem;
+  /* cambia el tipo de fuente de letra  */
+  font-family: "Open Sans", sans-serif;
+  /* añade espacio por debajo de cada elemento para separarlos  */
+  margin-bottom: 5px;
+}
+
+/* estilo del input para introducir comandos  */
+section.command input {
+  /* añade relleno en los bordes  */
+  padding: 1vh;
+  /* redondea los bordes del input  */
+  border-radius: 10px;
+  /* cambia el color de fondo */
+  background-color: antiquewhite;
+  /* cambia el tamaño de la letra  */
+  font-size: 1rem;
+  /* cambia el tipo de fuente de letra  */
+  font-family: "Open Sans", sans-serif;
+}

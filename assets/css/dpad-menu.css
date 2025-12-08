@@ -1,0 +1,75 @@
+/* estilo del menu utilizado para mover al personaje */
+div.dpad-container {
+  /* establece el margen automatico para que este en el centro del hueco del grid reservado  */
+  margin: auto;
+}
+
+section.dpad {
+  /* crea una cuadricula de 9 huecos (3x3)  */
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  /* establece la altura y anchura de los botones segun el tamaño de la pantalla  */
+  width: 30vh;
+  height: 30vh;
+  /* establece el diseño del borde del menu  */
+  border: solid 10px rgb(160, 128, 85);
+  border-radius: 100%;
+  /* crea un fondo con un efecto de gradiente  */
+  background: radial-gradient(
+    farthest-corner at 2rem 2rem,
+    rgb(255, 211, 155) 50%,
+    rgb(139, 97, 41),
+    rgb(63, 45, 22) 120%
+  );
+}
+
+/* estilo de los botones direccionales del menu */
+section.dpad button {
+  /* cambia el tamaño de las flechas */
+  font-size: 5vh;
+  /* elimina el color de fondo  */
+  background-color: transparent;
+}
+
+/* añade un efecto de agrandamiento progresivo cuando se pasa el cursor por encima de los botones  */
+section.dpad button:hover {
+  transform: scale(1.5);
+  transition: 0.1s;
+}
+
+/* posicionamiento de los botones  */
+/*
+ESQUEMA:
+       1     2     3
+    +-----+-----+-----+
+  1 |     |  ↑  |     |
+    +-----+-----+-----+
+  2 |  ←  |     |  →  |
+    +-----+-----+-----+
+  3 |     |  ↓  |     |
+    +-----+-----+-----+
+*/
+/* posicion del boton con la flecha hacia arriba */
+section.dpad button.up {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+/* posicion del boton con la flecha hacia la izquierda */
+section.dpad button.left {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+/* posicion del boton con la flecha hacia abajo */
+section.dpad button.down {
+  grid-column: 2;
+  grid-row: 3;
+}
+
+/* posicion del boton con la flecha hacia la derecha */
+section.dpad button.right {
+  grid-column: 3;
+  grid-row: 2;
+}

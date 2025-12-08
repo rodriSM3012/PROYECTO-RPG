@@ -1,0 +1,49 @@
+/* estilo del contenedor con informacion del heroe y la seccion con historial e input  */
+section.info-mc,
+section.command {
+  /* establece el color de fondo  */
+  background-color: rgb(139, 97, 41);
+  /* crea espacio alrededor del borde del contenedor  */
+  margin: 4vh;
+  padding: 3vh;
+  /* personalizacion del borde  */
+  border: 10px solid rgb(233, 187, 128);
+  border-radius: 1rem;
+  /* personalizacion de la fuente del contenido de la seccion */
+  color: white;
+  font-family: "Macondo", cursive;
+  font-size: 1.5rem;
+  /* distribuye los elementos para que exista el mayor espacio posible entre ambos  */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* estilo de las secciones de info con atributos del personaje y enemigo  */
+section.info-mc div,
+section.info-npc {
+  /* estilo del nombre del enemigo/personaje principal */
+  h2 {
+    margin-bottom: 1vh;
+    a {
+      color: white;
+    }
+  }
+  /* estilo de la lista de atributos del enemigo/personaje principal */
+  ul {
+    /* hace que los atributos aparezcan en una columna de elementos  */
+    display: flex;
+    flex-direction: column;
+    /* establece un hueco entre los elementos  */
+    gap: 1vh;
+    /* estilo de los enlaces del nombre de cada atributo  */
+    a {
+      /* cambia el color del texto  */
+      color: rgb(218, 195, 240);
+    }
+    /* añade un efecto de subrayado al pasar el raton por encima de los atributos  */
+    a:hover {
+      text-decoration: underline;
+    }
+  }
+}
