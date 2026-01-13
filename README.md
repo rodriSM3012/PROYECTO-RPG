@@ -9,3 +9,6 @@ Interfaz gráfica inspirada en videojuegos RPG, creada como proyecto que junta d
 
 
 ## Inspiración
+
+imagenes
+https://drive.google.com/file/d/1YnmWtNLKhBG0mr2WJkBVXlcr0cL_GydW/view
