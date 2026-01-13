@@ -26,8 +26,9 @@ section.dpad {
 
 /* estilo de los botones direccionales del menu */
 section.dpad button {
-  /* cambia el tamaño de las flechas */
-  font-size: 5vh;
+  /* cambia el tamaño y color de las flechas */
+  font-size: 7vh;
+  color: rgb(139, 97, 41);
   /* elimina el color de fondo  */
   background-color: transparent;
 }
