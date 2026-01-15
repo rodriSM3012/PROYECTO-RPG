@@ -7,7 +7,7 @@ const defaultGameState = {
     strengthBonus: 2,
     defense: 12,
     defenseBonus: 0,
-    currentRoom: 0, // se empieza siempre en la ciudad
+    currentRoom: 1, // se empieza siempre en la ciudad
     gold: 300,
     potions: 3,
   },
@@ -206,7 +206,9 @@ const defaultGameState = {
 defaultGameState.player.name = prompt("Introduce el nombre de tu personaje: ");
 
 // window.onload asegura que se procese despues de que la pagina cargue
-window.onload = function () {};
+window.onload = function () {
+  showPlayerStats();
+};
 
 function showPlayerStats() {
   // muestra el nombre
@@ -225,5 +227,20 @@ function showPlayerStats() {
     " + " +
     defaultGameState.player.defenseBonus;
   // muestra el nombre de la ubicacion
-  document.getElementById("MCcurrentRoom").innerHTML; // TODO
+  let currentRoomID = defaultGameState.player.currentRoom;
+  document.getElementById("MCcurrentRoom").innerHTML =
+    findRoomByID(currentRoomID).name;
+}
+
+// funcion para buscar una ubicacion por la ID
+function findRoomByID(targetID) {
+  // usa find() para buscar room que tenga la misma id y si no la encuentra devuelve undefined
+  let foundRoom = defaultGameState.map.rooms.find(
+    (room) => room.id === targetID
+  );
+  if (foundRoom === undefined) {
+    return -1; // si no se encontro se devuelve -1
+  } else {
+    return foundRoom; // devuelve el objeto de room que se encontro con find()
+  }
 }
