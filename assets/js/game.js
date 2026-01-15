@@ -200,3 +200,30 @@ const defaultGameState = {
     ],
   },
 };
+
+// en primer lugar se pregunta al usuario el nombre que le pondrá a su personaje
+// con un prompt en el navegador y se guarda en defaultGameState
+defaultGameState.player.name = prompt("Introduce el nombre de tu personaje: ");
+
+// window.onload asegura que se procese despues de que la pagina cargue
+window.onload = function () {};
+
+function showPlayerStats() {
+  // muestra el nombre
+  document.getElementById("MCname").innerHTML = defaultGameState.player.name;
+  // muestra la salud
+  document.getElementById("MChealth").innerHTML =
+    defaultGameState.player.health;
+  // muestra la fuerza + bonus
+  document.getElementById("MCstrength").innerHTML =
+    defaultGameState.player.strength +
+    " + " +
+    defaultGameState.player.strengthBonus;
+  // muestra la defensa + bonus
+  document.getElementById("MCdefense").innerHTML =
+    defaultGameState.player.defense +
+    " + " +
+    defaultGameState.player.defenseBonus;
+  // muestra el nombre de la ubicacion
+  document.getElementById("MCcurrentRoom").innerHTML; // TODO
+}
