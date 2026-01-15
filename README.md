@@ -12,3 +12,5 @@ Interfaz gráfica inspirada en videojuegos RPG, creada como proyecto que junta d
 
 imagenes
 https://drive.google.com/file/d/1YnmWtNLKhBG0mr2WJkBVXlcr0cL_GydW/view
+https://bg3.wiki
+https://www.artstation.com/robocobra
