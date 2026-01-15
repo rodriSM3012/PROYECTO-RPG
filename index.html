@@ -21,9 +21,9 @@
       </section>
       <!-- seccion con botones de sistema -->
       <nav>
-        <button onclick="">💾 Guardar</button>
-        <button onclick="">📂 Cargar</button>
-        <button onclick="">❓ Ayuda</button>
+        <button id="save">💾 Guardar</button>
+        <button id="load">📂 Cargar</button>
+        <button id="help">❓ Ayuda</button>
       </nav>
     </header>
 
@@ -51,12 +51,14 @@
         <!-- seccion info personaje princ  -->
         <section class="info-mc">
           <div>
-            <h2><a href="#">Héroe</a></h2>
+            <h2><a href="#" id="MCname"></a></h2>
             <ul>
-              <li><a href="#">Salud:</a> 30</li>
-              <li><a href="#">Fuerza:</a> 14 + 2</li>
-              <li><a href="#">Defensa:</a> 12 + 0</li>
-              <li><a href="#">Ubicación:</a> Orilla del Lago</li>
+              <li><a href="#">Salud:</a><span id="MChealth"></span></li>
+              <li><a href="#">Fuerza:</a><span id="MCstrength"></span></li>
+              <li><a href="#">Defensa:</a><span id="MCdefense"></span></li>
+              <li>
+                <a href="#">Ubicación:</a><span id="MCcurrentRoom"></span>
+              </li>
             </ul>
           </div>
           <ul class="object">
@@ -74,21 +76,7 @@
           <div class="history">
             <h2>Historial de eventos</h2>
             <div>
-              <ul>
-                <li>Evento 1</li>
-                <li>Evento 2</li>
-                <li>Evento 3</li>
-                <li>Evento 4</li>
-                <li>Evento 5</li>
-                <li>Evento 6</li>
-                <li>Evento 7</li>
-                <li>Evento 8</li>
-                <li>Evento 9</li>
-                <li>Evento 10</li>
-                <li>Evento 11</li>
-                <li>Evento 12</li>
-                <li>Evento 13</li>
-              </ul>
+              <ul></ul>
             </div>
           </div>
           <input
