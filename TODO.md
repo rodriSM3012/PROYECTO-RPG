@@ -13,13 +13,18 @@
 - usar templates
 - eventos con addEventListener
 
-- [ ] conexiones de las salas segun el mapa
+- [x] pedir el nombre del personaje con un alert()
+- [x] conexiones de las salas segun el mapa
 	0,1,2,3... -1 cuando no hay ninguna
 - [ ] movimiento del personaje
 	- [ ] colocar id de la sala actual
 	- [ ] al hacer clic en dpad que se actualice
 - [ ] mostrar imagen, nombre y descripcion de la sala
 - [ ] en la descripcion de la sala poner posibles salidas
+	- "Hay varias posibles salidas:
+	   Norte:[], Este: [], Sur: [], Oeste: []"
+	- cada nombre de las direcciones que tengan colores distintos
+	- separado por lineas o en misma linea?
 - [ ] aparicion de enemigos
 	- [ ] cada vez que se avanza a una sala se mira el indice de aparicion de enemgios
 	- [ ] escribir nombre y descripcion en zona de mensajes
