@@ -6,7 +6,8 @@
 - [ ] boton de enviar en input ▶
 - [ ] hacer que la imagen del enemigo aparezca por debajo del header
 - [ ] hacer gradiente en los bordes de las secciones de .interact
-- [ ] poner link de imgs en REAMDE 
+- [x] poner link de imgs en REAMDE 
+- [ ] funcion para resetear defaultGameState (con save y load?)
 
 ### TAREA 5 DWEC
 
@@ -16,9 +17,9 @@
 - [x] pedir el nombre del personaje con un alert()
 - [x] conexiones de las salas segun el mapa
 	0,1,2,3... -1 cuando no hay ninguna
-- [ ] movimiento del personaje
-	- [ ] colocar id de la sala actual
-	- [ ] al hacer clic en dpad que se actualice
+- [x] movimiento del personaje
+	- [x] colocar id de la sala actual
+	- [x] al hacer clic en dpad que se actualice
 - [ ] mostrar imagen, nombre y descripcion de la sala
 - [ ] en la descripcion de la sala poner posibles salidas
 	- "Hay varias posibles salidas:
