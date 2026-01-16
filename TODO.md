@@ -8,6 +8,9 @@
 - [ ] hacer gradiente en los bordes de las secciones de .interact
 - [x] poner link de imgs en REAMDE 
 - [ ] funcion para resetear defaultGameState (con save y load?)
+- [ ] añadir efecto de sombra en los bordes de img del enemigo?
+- [ ] añadir mapa¿¿?
+- [ ] findRoomByID hace que spawnEnemy no funcione bien si no se actualiza en cada funcion
 
 ### TAREA 5 DWEC
 
@@ -26,10 +29,10 @@
 	   Norte:[], Este: [], Sur: [], Oeste: []"
 	- cada nombre de las direcciones que tengan colores distintos
 	- separado por lineas o en misma linea?
-- [ ] aparicion de enemigos
-	- [ ] cada vez que se avanza a una sala se mira el indice de aparicion de enemgios
+- [x] aparicion de enemigos
+	- [x] cada vez que se avanza a una sala se mira el indice de aparicion de enemgios
 	- [ ] escribir nombre y descripcion en zona de mensajes
-	- [ ] dentro de la probabilidad de enemigo hay 2% de que sea jefe
+	- [x] dentro de la probabilidad de enemigo hay 2% de que sea jefe
 - [ ] busqueda de oro
 	- [ ] boton para buscar
 	- [ ] solo se puede buscar si hay prob de que salga enemigo → boton en gris si no se puede?? y que diga por que no al pasar el raton por encima??
