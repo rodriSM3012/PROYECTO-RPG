@@ -30,22 +30,23 @@
     <main>
       <!-- seccion con imagen de fondo -->
       <section class="background-img">
-        <img src="./assets/images/placeholder/Screenshot270.png" alt="" />
+        <img id="imgBG" src="" alt="" />
       </section>
       <!-- seccion con enemigo/personaje -->
       <section class="img-npc">
-        <img src="./assets/images/placeholder/Dragon.png" alt="" />
+        <img id="imgNPC" src="" alt="" />
       </section>
       <div class="interact">
         <!-- informacion del personaje y del enemigo -->
         <section class="info-npc">
           <!-- seccion info del enemigo  -->
-          <h2 class="name">Odahviing</h2>
-          <p class="isBoss"><b>Jefe final</b></p>
+          <h2 class="name"><span id="NPCname"></span></h2>
+          <!-- TODO si NO es boss poner espacio en blanco ↓↓↓  -->
+          <p class="isBoss"><span id="NPCbossStatus"></span></p>
           <ul>
-            <li><a href="#">Salud:</a> 3000</li>
-            <li><a href="#">Fuerza:</a> 18</li>
-            <li><a href="#">Defensa:</a> 14</li>
+            <li><a href="#">Salud: </a><span id="NPChealth"></span></li>
+            <li><a href="#">Fuerza: </a><span id="NPCstrength"></span></li>
+            <li><a href="#">Defensa: </a><span id="NPCdefense"></span></li>
           </ul>
         </section>
         <!-- seccion info personaje princ  -->

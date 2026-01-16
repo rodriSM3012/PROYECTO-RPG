@@ -7,7 +7,7 @@ const defaultGameState = {
     strengthBonus: 2,
     defense: 12,
     defenseBonus: 0,
-    currentRoom: 1, // se empieza siempre en la ciudad
+    currentRoom: 0, // se empieza siempre en la ciudad
     gold: 300,
     potions: 3,
   },
@@ -253,6 +253,8 @@ function showPlayerStats() {
     findRoomByID(currentRoomID).name;
 }
 
+function showEnemyStats() {}
+
 // funcion para buscar una ubicacion por la ID
 function findRoomByID(targetID) {
   // usa find() para buscar room que tenga la misma id y si no la encuentra devuelve undefined
@@ -300,6 +302,14 @@ function moveMC(dir) {
 
 // funcion para actualizar los datos que se muestran en pantalla
 function updateUI() {
-  showPlayerStats();
-  // TODO update bg y enemigos + comprobar ind de aparicion de enemigos
+  showPlayerStats(); // actualiza datos del jugador
+  // TODO comprobar ind de aparicion de enemigos
+  showEnemyStats(); // actualiza datos del enemigo
+
+  // cambia imagenes de fondo
+  let currentRoomID = defaultGameState.player.currentRoom; // TODO se calcula muchas veces → crear funcion?
+  let imgSRC = findRoomByID(currentRoomID).img; // direccion de la imagen de la ubicacion objetivo
+
+  let backgroundIMG = document.getElementById("imgBG"); // objeto del DOM de la img de fondo
+  backgroundIMG.src = imgSRC; // asigna la direccion de la imagen
 }
