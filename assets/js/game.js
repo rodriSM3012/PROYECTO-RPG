@@ -130,6 +130,7 @@ const defaultGameState = {
     ],
     enemies: [
       {
+        id: 0,
         // spectator
         name: "Contemplador",
         // determina si es un enemigo mayor (boss) o menor
@@ -143,6 +144,7 @@ const defaultGameState = {
         img: "./assets/images/game/enemies/spectator.png",
       },
       {
+        id: 1,
         // minotaur
         name: "Minotauro",
         isBoss: false,
@@ -154,6 +156,7 @@ const defaultGameState = {
         img: "./assets/images/game/enemies/minotaur.png",
       },
       {
+        id: 2,
         // mimic
         name: "Mímico",
         isBoss: false,
@@ -165,6 +168,7 @@ const defaultGameState = {
         img: "./assets/images/game/enemies/mimic.png",
       },
       {
+        id: 3,
         // woodwoad
         name: "Guardián del bosque",
         isBoss: false,
@@ -176,6 +180,7 @@ const defaultGameState = {
         img: "./assets/images/game/enemies/woodwoad.png",
       },
       {
+        id: 4,
         // redcap
         name: "Duende del pantano",
         isBoss: false,
@@ -187,6 +192,7 @@ const defaultGameState = {
         img: "./assets/images/game/enemies/redcap.png",
       },
       {
+        id: 5,
         // kobold
         name: "Kobold",
         isBoss: false,
@@ -203,12 +209,18 @@ const defaultGameState = {
 
 // en primer lugar se pregunta al usuario el nombre que le pondrá a su personaje
 // con un prompt en el navegador y se guarda en defaultGameState
-defaultGameState.player.name = prompt("Introduce el nombre de tu personaje: ");
+// defaultGameState.player.name = prompt("Introduce el nombre de tu personaje: "); TODO re-enable
+defaultGameState.player.name = "sadasdadsa";
+
+let activeEnemy; // guarda la id del enemigo que aparezca
+let currentRoomID; // guarda la id de la ubicacion
+// currentRoomID se actualiza automaticamente cada vez que el usuario pulsa el dpad:
+// pulsa boton → llama funcion moveMC() → la funcion llama update() automaticamente y currentRoomID se acutaliza
 
 // window.onload asegura que se procese despues de que la pagina cargue
 window.onload = function () {
-  // ejecuta la funcion para mostrar todos los datos
-  updateUI();
+  // actualiza los datos en pantalla y procesa la logica de generar enemigos
+  update();
 
   // añade eventListener a los botones del dpad
   let dpadU = document.getElementById("up");
@@ -253,9 +265,33 @@ function showPlayerStats() {
     findRoomByID(currentRoomID).name;
 }
 
-function showEnemyStats() {}
+function showEnemyStats(enemyID) {
+  const sectionNPC = document.getElementById("sectionNPC");
+  const imgNPC = document.getElementById("imgNPC");
+  // si es -1 es que no se genero ningun enemigo
+  if (enemyID != -1) {
+    let currentEnemy = findEnemyByID(enemyID); // busca al enemigo con la id que se genero con spawnEnemy
 
-// funcion para buscar una ubicacion por la ID
+    // genera la seccion de datos del enemigo con un template
+    sectionNPC.innerHTML = `
+      <h2 class="name">${currentEnemy.name}</h2>
+      <p class="isBoss">${currentEnemy.isBoss ? "Jefe" : "&nbsp"}</p>
+      <ul>
+        <li><a href="#">Salud: </a>${currentEnemy.health}</li>
+        <li><a href="#">Fuerza: </a>${currentEnemy.strength}</li>
+        <li><a href="#">Defensa: </a>${currentEnemy.defence}</li>
+      </ul>
+      `;
+    // añade la imagen del enemigo
+    imgNPC.src = currentEnemy.img;
+  } else {
+    // si no aparecio ningun enemigo actualiza los datos para que no muestren nada
+    sectionNPC.innerHTML = "";
+    imgNPC.src = "";
+  }
+}
+
+// funcion para buscar una ubicacion por la ID y devuelve el objeto encontrado o -1
 function findRoomByID(targetID) {
   // usa find() para buscar room que tenga la misma id y si no la encuentra devuelve undefined
   let foundRoom = defaultGameState.map.rooms.find(
@@ -265,6 +301,50 @@ function findRoomByID(targetID) {
     return -1; // si no se encontro se devuelve -1
   } else {
     return foundRoom; // devuelve el objeto de room que se encontro con find()
+  }
+}
+
+// funcion para buscar el enemigo segun la ID y devuelve el objeto encontrado o -1
+function findEnemyByID(targetID) {
+  // usa find() para buscar enemy que tenga la misma id y si no la encuentra devuelve undefined
+  let foundEnemy = defaultGameState.map.enemies.find(
+    (enemy) => enemy.id === targetID
+  );
+  if (foundEnemy === undefined) {
+    return -1; // si no se encontro se devuelve -1
+  } else {
+    return foundEnemy; // devuelve el objeto de enemy que se encontro con find()
+  }
+}
+
+// funcion que genera un enemigo aleatoriamente y devuelve su id
+function spawnEnemy() {
+  let diceRoll = Math.random(); // num aleatorio entre 0 y 1
+  console.log(diceRoll);
+  let spawnedEnemyID;
+
+  let currentRoomID = defaultGameState.player.currentRoom;
+  let spawnChance = findRoomByID(currentRoomID).monsterProb; // extrae la probabilidad de que aparezca un mosntruo de la ubicacon en concreto
+  if (diceRoll < spawnChance) {
+    if (currentRoomID === 7) {
+      return 0; // si es la habitacion final siempre es el boss
+    } else {
+      // comprueba si el boss aparece con prob de 2%
+      let bossSpawn = Math.random() * 100; // random (0, 100)
+      if (bossSpawn < 2) {
+        return 0; // id del boss
+      } else {
+        // si el boss no aparece genera un mosntruo normal
+        spawnedEnemyID =
+          parseInt(Math.random() * (defaultGameState.map.enemies.length - 1)) +
+          1;
+        // numero entre 0 y 1 * numero total de enemigos y lo pasa a int → id aleatoria de enemigo
+        // -1 a length para no tener en cuenta un enemigo, luego suma 1 para evitar la id del boss
+        return spawnedEnemyID;
+      }
+    }
+  } else {
+    return -1; // no aparecio ningun enemigo
   }
 }
 
@@ -295,19 +375,17 @@ function moveMC(dir) {
     defaultGameState.player.currentRoom = nextRoomID;
   }
   // llama a la funcion para actualizar la interfaz despues de los cambios
-  updateUI();
-  console.log("asdasd");
-  console.log(defaultGameState.player.currentRoom);
+  update();
 }
 
-// funcion para actualizar los datos que se muestran en pantalla
-function updateUI() {
+// funcion para actualizar los datos que se muestran en pantalla y la logica encargada de generar enemigos
+function update() {
+  activeEnemy = spawnEnemy(); // actualiza el enemigo en pantalla si lo hay
   showPlayerStats(); // actualiza datos del jugador
-  // TODO comprobar ind de aparicion de enemigos
-  showEnemyStats(); // actualiza datos del enemigo
+  showEnemyStats(activeEnemy); // actualiza datos del enemigo
 
   // cambia imagenes de fondo
-  let currentRoomID = defaultGameState.player.currentRoom; // TODO se calcula muchas veces → crear funcion?
+  currentRoomID = defaultGameState.player.currentRoom;
   let imgSRC = findRoomByID(currentRoomID).img; // direccion de la imagen de la ubicacion objetivo
 
   let backgroundIMG = document.getElementById("imgBG"); // objeto del DOM de la img de fondo
