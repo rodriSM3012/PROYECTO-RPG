@@ -207,7 +207,28 @@ defaultGameState.player.name = prompt("Introduce el nombre de tu personaje: ");
 
 // window.onload asegura que se procese despues de que la pagina cargue
 window.onload = function () {
-  showPlayerStats();
+  // ejecuta la funcion para mostrar todos los datos
+  updateUI();
+
+  // añade eventListener a los botones del dpad
+  let dpadU = document.getElementById("up");
+  let dpadR = document.getElementById("right");
+  let dpadD = document.getElementById("down");
+  let dpadL = document.getElementById("left");
+
+  // usa funciones anonimas para solo tener 1 funcion moveMC y una variable para cada direccion
+  dpadU.addEventListener("click", () => {
+    moveMC("u");
+  });
+  dpadR.addEventListener("click", () => {
+    moveMC("r");
+  });
+  dpadD.addEventListener("click", () => {
+    moveMC("d");
+  });
+  dpadL.addEventListener("click", () => {
+    moveMC("l");
+  });
 };
 
 function showPlayerStats() {
@@ -243,4 +264,42 @@ function findRoomByID(targetID) {
   } else {
     return foundRoom; // devuelve el objeto de room que se encontro con find()
   }
+}
+
+// funciones para mover al personaje dependiendo de la direccion
+function moveMC(dir) {
+  let currentRoomID = defaultGameState.player.currentRoom; // var para guardar la id de la ubicacion en la que esta el personaje
+  let nextRoomID; // inicializacion de var donde se guardara la id de la proxima sala
+  // asigna una id distinta segun la direccion que selecciono el jugador (dir)
+  switch (dir) {
+    case "u":
+      nextRoomID = findRoomByID(currentRoomID).north;
+      break;
+    case "r":
+      nextRoomID = findRoomByID(currentRoomID).east;
+      break;
+    case "d":
+      nextRoomID = findRoomByID(currentRoomID).south;
+      break;
+    case "l":
+      nextRoomID = findRoomByID(currentRoomID).west;
+      break;
+    default:
+      nextRoomID = -1; // por defecto es -1 = mismo valor que cuando no hay una sala conectada en esa direccion
+      break;
+  }
+  // actualiza curretnRoom del pj segun la siguiente sala
+  if (nextRoomID != -1) {
+    defaultGameState.player.currentRoom = nextRoomID;
+  }
+  // llama a la funcion para actualizar la interfaz despues de los cambios
+  updateUI();
+  console.log("asdasd");
+  console.log(defaultGameState.player.currentRoom);
+}
+
+// funcion para actualizar los datos que se muestran en pantalla
+function updateUI() {
+  showPlayerStats();
+  // TODO update bg y enemigos + comprobar ind de aparicion de enemigos
 }
