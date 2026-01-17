@@ -210,8 +210,8 @@ const defaultGameState = {
 
 // en primer lugar se pregunta al usuario el nombre que le pondrá a su personaje
 // con un prompt en el navegador y se guarda en defaultGameState
-// defaultGameState.player.name = prompt("Introduce el nombre de tu personaje: "); TODO re-enable
-defaultGameState.player.name = "sadasdadsa";
+defaultGameState.player.name = prompt("Introduce el nombre de tu personaje: ");
+// defaultGameState.player.name = "sadasdadsa";
 
 let activeEnemy = -1; // guarda la id del enemigo que aparezca
 let currentRoomID; // guarda la id de la ubicacion
@@ -344,7 +344,7 @@ function findEnemyByID(targetID) {
 // funcion que genera un enemigo aleatoriamente y devuelve su id
 function spawnEnemy() {
   let diceRoll = Math.random(); // num aleatorio entre 0 y 1
-  console.log(diceRoll);
+  console.log(diceRoll); // test
   let spawnedEnemyID;
 
   let currentRoomID = defaultGameState.player.currentRoom;
@@ -404,6 +404,7 @@ function moveMC(dir) {
 
 // funcion que devuelve un string con la descripcion del sitio y las posibles salidas
 function generateDescription() {
+  // comprueba que no haya un enemigo activo, si lo hay tendra prioridad la descripcion del enemigo antes que la ubicacion
   if (activeEnemy == -1) {
     let currentRoom = findRoomByID(currentRoomID);
     let text = currentRoom.description; // extrae la descripcion de defaultGameState
@@ -435,6 +436,7 @@ function generateDescription() {
     console.log(text);
     return text;
   } else {
+    // devuelve la descripcion del enemigo activo
     return findEnemyByID(activeEnemy).description;
   }
 }
@@ -523,7 +525,7 @@ function update() {
   currentRoomID = defaultGameState.player.currentRoom; // actualiza la ubicacion actual
   // log
   let currentRoomName = findRoomByID(currentRoomID).name;
-  logMessage("Has entrado en '" + currentRoomName + "'");
+  logMessage("Has entrado en '" + currentRoomName + "'.");
 
   activeEnemy = spawnEnemy(); // actualiza el enemigo en pantalla si lo hay
   showPlayerStats(); // actualiza datos del jugador en pantalla
