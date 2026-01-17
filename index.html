@@ -66,18 +66,21 @@
 
         <!-- input de comandos e historial  -->
         <section class="command">
-          <div class="history">
+          <div class="history" id="history">
             <h2>Historial de eventos</h2>
             <div>
-              <ul></ul>
+              <ul id="historyList"></ul>
             </div>
           </div>
-          <input
-            type="text"
-            id="command-input"
-            name="command-input"
-            placeholder="Escribe un comando"
-          />
+          <div class="input">
+            <input
+              type="text"
+              id="command-input"
+              name="command-input"
+              placeholder="Escribe un comando"
+            />
+            <button id="submitCommand">➤</button>
+          </div>
         </section>
 
         <!-- menu direccional -->

@@ -36,8 +36,9 @@ section.command div.history div ul li {
   margin-bottom: 5px;
 }
 
-/* estilo del input para introducir comandos  */
-section.command input {
+/* estilo del input para introducir comandos y el boton para enviar */
+section.command input,
+#submitCommand {
   /* añade relleno en los bordes  */
   padding: 1vh;
   /* redondea los bordes del input  */
@@ -48,4 +49,32 @@ section.command input {
   font-size: 1rem;
   /* cambia el tipo de fuente de letra  */
   font-family: "Open Sans", sans-serif;
+}
+
+/* añade display flex al input y al boton para enviar comandos para organizarlos */
+div.input {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* establece la anchura del input y añade distancia respecto al boton  */
+section.command input {
+  width: 100%;
+  margin-right: 2vh;
+}
+
+/* establece el tamaño del boton de enviar */
+#submitCommand {
+  min-width: 40px;
+  width: 5%;
+  height: auto;
+}
+
+/* añade un efecto de hover al boton  */
+#submitCommand:hover {
+  color: antiquewhite;
+  background-color: rgb(63, 45, 22);
+  /* border: 5px solid #c49961; TODO*/
+  transition-duration: 200ms;
 }
