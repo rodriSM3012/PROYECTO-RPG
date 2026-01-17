@@ -219,6 +219,8 @@ let currentRoomID; // guarda la id de la ubicacion
 
 // window.onload asegura que se procese despues de que la pagina cargue
 window.onload = function () {
+  logMessage("Comandos disponibles: <br/>- O, Observar → para mostrar descripción del lugar")
+
   // actualiza los datos en pantalla y procesa la logica de generar enemigos
   update();
 
@@ -241,6 +243,15 @@ window.onload = function () {
   dpadL.addEventListener("click", () => {
     moveMC("l");
   });
+
+  // añade eventListener al boton de enviar comandos
+  let submitCommand = document.getElementById("submitCommand");
+  submitCommand.addEventListener("click", sendInput);
+  /*
+  COMANDOS:
+    - O / Observar
+    - TODO
+  */
 };
 
 function showPlayerStats() {
@@ -378,11 +389,75 @@ function moveMC(dir) {
   update();
 }
 
+// funcion que devuelve un string con la descripcion del sitio y las posibles salidas
+function generateRoomDescription() {
+  let currentRoom = findRoomByID(currentRoomID);
+  let text = currentRoom.description; // extrae la descripcion de defaultGameState
+
+  let availableLocations = [];
+  let cont = 0; // lleva la cuenta de cuantas ubicaciones contiguas hay disponibles
+  // serie de ifs para comprobar cada una de las 4 direcciones si existen habitaciones
+  if (currentRoom.north != -1) availableLocations.push("norte");
+  if (currentRoom.east != -1) availableLocations.push("este");
+  if (currentRoom.south != -1) availableLocations.push("sur");
+  if (currentRoom.west != -1) availableLocations.push("oeste");
+  cont = availableLocations.length; // actualiza cont con la cantidad de ifs exitosos
+
+  text += "<br/>Hay " + cont;
+  // if para escribir en plural o singular
+  if (cont > 1) {
+    let excludeLast = availableLocations.slice(0, -1).join(", ");
+    let last = availableLocations[cont - 1];
+    text +=
+      " ubicaciones accesibles en las direcciones " +
+      excludeLast +
+      " y " +
+      last +
+      ".";
+  } else {
+    text +=
+      " ubicación accesible en la dirección " + availableLocations[0] + ".";
+  }
+  console.log(text);
+  return text;
+}
+
+// funcion que procesa el contenido de input y llama a una funcion distinta dependiendo del contenido de input para generar un mensaje
+function sendInput() {
+  // contenido del input que intrudjo el jugador
+  let userInput = document.getElementById("command-input").value;
+  if (userInput == "Observar" || userInput == "O") {
+    logMessage(generateRoomDescription());
+  }
+  // TODO elif con cada comando disponible (por ahora solo 1)
+  else {
+    logMessage(
+      "Comando no identificado. Pulsa ❓ Ayuda para ver todos los comandos. (función por implementar)"
+    ); // TODO seccion de ayuda
+  }
+}
+
+function logMessage(text) {
+  let historyList = document.getElementById("historyList");
+
+  const newLi = document.createElement("li");
+  newLi.innerHTML = text;
+  historyList.appendChild(newLi);
+
+  // asegura que siempre se vea el ultimo mensaje
+  historyList.scrollTop = historyList.scrollHeight;
+}
+
 // funcion para actualizar los datos que se muestran en pantalla y la logica encargada de generar enemigos
 function update() {
   activeEnemy = spawnEnemy(); // actualiza el enemigo en pantalla si lo hay
-  showPlayerStats(); // actualiza datos del jugador
-  showEnemyStats(activeEnemy); // actualiza datos del enemigo
+  showPlayerStats(); // actualiza datos del jugador en pantalla
+  showEnemyStats(activeEnemy); // actualiza datos del enemigo en pantalla
+  currentRoomID = defaultGameState.player.currentRoom; // actualiza la ubicacion actual
+
+  // log
+  let currentRoomName = findRoomByID(currentRoomID).name;
+  logMessage("Has entrado en '" + currentRoomName + "'");
 
   // cambia imagenes de fondo
   currentRoomID = defaultGameState.player.currentRoom;
