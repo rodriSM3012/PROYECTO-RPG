@@ -213,7 +213,7 @@ const defaultGameState = {
 // defaultGameState.player.name = prompt("Introduce el nombre de tu personaje: "); TODO re-enable
 defaultGameState.player.name = "sadasdadsa";
 
-let activeEnemy; // guarda la id del enemigo que aparezca
+let activeEnemy = -1; // guarda la id del enemigo que aparezca
 let currentRoomID; // guarda la id de la ubicacion
 // currentRoomID se actualiza automaticamente cada vez que el usuario pulsa el dpad:
 // pulsa boton → llama funcion moveMC() → la funcion llama update() automaticamente y currentRoomID se acutaliza
@@ -306,6 +306,8 @@ function showEnemyStats(enemyID) {
       `;
     // añade la imagen del enemigo
     imgNPC.src = currentEnemy.img;
+    // añade un mensaje en el historial
+    logMessage("¡Ha aparecido un " + currentEnemy.name + "!");
   } else {
     // si no aparecio ningun enemigo actualiza los datos para que no muestren nada
     sectionNPC.innerHTML = "";
@@ -401,36 +403,40 @@ function moveMC(dir) {
 }
 
 // funcion que devuelve un string con la descripcion del sitio y las posibles salidas
-function generateRoomDescription() {
-  let currentRoom = findRoomByID(currentRoomID);
-  let text = currentRoom.description; // extrae la descripcion de defaultGameState
+function generateDescription() {
+  if (activeEnemy == -1) {
+    let currentRoom = findRoomByID(currentRoomID);
+    let text = currentRoom.description; // extrae la descripcion de defaultGameState
 
-  let availableLocations = [];
-  let cont = 0; // lleva la cuenta de cuantas ubicaciones contiguas hay disponibles
-  // serie de ifs para comprobar cada una de las 4 direcciones si existen habitaciones
-  if (currentRoom.north != -1) availableLocations.push("norte");
-  if (currentRoom.east != -1) availableLocations.push("este");
-  if (currentRoom.south != -1) availableLocations.push("sur");
-  if (currentRoom.west != -1) availableLocations.push("oeste");
-  cont = availableLocations.length; // actualiza cont con la cantidad de ifs exitosos
+    let availableLocations = [];
+    let cont = 0; // lleva la cuenta de cuantas ubicaciones contiguas hay disponibles
+    // serie de ifs para comprobar cada una de las 4 direcciones si existen habitaciones
+    if (currentRoom.north != -1) availableLocations.push("norte");
+    if (currentRoom.east != -1) availableLocations.push("este");
+    if (currentRoom.south != -1) availableLocations.push("sur");
+    if (currentRoom.west != -1) availableLocations.push("oeste");
+    cont = availableLocations.length; // actualiza cont con la cantidad de ifs exitosos
 
-  text += "<br/>Hay " + cont;
-  // if para escribir en plural o singular
-  if (cont > 1) {
-    let excludeLast = availableLocations.slice(0, -1).join(", ");
-    let last = availableLocations[cont - 1];
-    text +=
-      " ubicaciones accesibles en las direcciones " +
-      excludeLast +
-      " y " +
-      last +
-      ".";
+    text += "<br/>Hay " + cont;
+    // if para escribir en plural o singular
+    if (cont > 1) {
+      let excludeLast = availableLocations.slice(0, -1).join(", ");
+      let last = availableLocations[cont - 1];
+      text +=
+        " ubicaciones accesibles en las direcciones " +
+        excludeLast +
+        " y " +
+        last +
+        ".";
+    } else {
+      text +=
+        " ubicación accesible en la dirección " + availableLocations[0] + ".";
+    }
+    console.log(text);
+    return text;
   } else {
-    text +=
-      " ubicación accesible en la dirección " + availableLocations[0] + ".";
+    return findEnemyByID(activeEnemy).description;
   }
-  console.log(text);
-  return text;
 }
 
 // funcion para buscar oro. devuelve un string que se mostrara en el log
@@ -482,12 +488,12 @@ function sendInput() {
   let userInput = document.getElementById("command-input").value.toLowerCase();
   if (userInput == "observar" || userInput == "o") {
     deleteInput();
-    logMessage(generateRoomDescription());
+    logMessage(generateDescription());
   } else if (userInput == "buscar" || userInput == "b") {
     deleteInput();
     logMessage(searchGold());
   }
-  // TODO elif con cada comando disponible (por ahora solo 1)
+  // TODO elif con cada comando disponible
   else {
     deleteInput();
     logMessage(
@@ -514,14 +520,14 @@ function logMessage(text) {
 
 // funcion para actualizar los datos que se muestran en pantalla y la logica encargada de generar enemigos
 function update() {
-  activeEnemy = spawnEnemy(); // actualiza el enemigo en pantalla si lo hay
-  showPlayerStats(); // actualiza datos del jugador en pantalla
-  showEnemyStats(activeEnemy); // actualiza datos del enemigo en pantalla
   currentRoomID = defaultGameState.player.currentRoom; // actualiza la ubicacion actual
-
   // log
   let currentRoomName = findRoomByID(currentRoomID).name;
   logMessage("Has entrado en '" + currentRoomName + "'");
+
+  activeEnemy = spawnEnemy(); // actualiza el enemigo en pantalla si lo hay
+  showPlayerStats(); // actualiza datos del jugador en pantalla
+  showEnemyStats(activeEnemy); // actualiza datos del enemigo en pantalla
 
   // reinicia la posibilidad de buscar oro
   defaultGameState.player.hasSearched = false;
