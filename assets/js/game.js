@@ -10,6 +10,7 @@ const defaultGameState = {
     currentRoom: 0, // se empieza siempre en la ciudad
     gold: 300,
     potions: 3,
+    hasSearched: false, // flag para permitir buscar oro 1 vez por cambio de ubicacion
   },
   map: {
     rooms: [
@@ -219,7 +220,11 @@ let currentRoomID; // guarda la id de la ubicacion
 
 // window.onload asegura que se procese despues de que la pagina cargue
 window.onload = function () {
-  logMessage("Comandos disponibles: <br/>- O, Observar → para mostrar descripción del lugar")
+  logMessage(
+    "Comandos disponibles: <br/>" +
+      "- O, Observar → para mostrar descripción del lugar<br/>" +
+      "- B, Buscar → para buscar oro"
+  );
 
   // actualiza los datos en pantalla y procesa la logica de generar enemigos
   update();
@@ -247,9 +252,15 @@ window.onload = function () {
   // añade eventListener al boton de enviar comandos
   let submitCommand = document.getElementById("submitCommand");
   submitCommand.addEventListener("click", sendInput);
+  // para que tambien funcione con Enter
+  let userInput = document.getElementById("command-input");
+  userInput.addEventListener("keypress", (e) => {
+    if (e.key == "Enter") sendInput();
+  });
   /*
   COMANDOS:
     - O / Observar
+    - B / Buscar
     - TODO
   */
 };
@@ -422,19 +433,72 @@ function generateRoomDescription() {
   return text;
 }
 
+// funcion para buscar oro. devuelve un string que se mostrara en el log
+// TODO no se deberia poder buscar oro si el enemigo no ha sido derrotado
+function searchGold() {
+  let currentRoom = findRoomByID(currentRoomID); // objeto de la habitacion actual
+  let text = ""; // texto que se devolvera al final de la funcion
+
+  // comprueba que todavia no se ha buscado en esta sala
+  if (defaultGameState.player.hasSearched) {
+    return "Ya has buscado en este lugar.";
+  } else {
+    // solo se puede buscar si hay posibilidad de que aparezca un mosntruo
+    if (currentRoom.monsterProb > 0) {
+      let diceRoll = Math.random(); // num aleatorio entre 0 y 1
+      let foundGold = 0; // cantidad de oro encontrado
+
+      // cuanta mayor prob de monstruo mas probable es encontrar oro
+      if (diceRoll < currentRoom.monsterProb) {
+        if (diceRoll > 0.97) {
+          // 3% de posibilidad de encontrar muchisimo oro
+          // TODO poner mensaje distinto comprobando diceRoll
+          foundGold = parseInt((diceRoll + currentRoom.monsterProb) * 500);
+          defaultGameState.player.hasSearched = true;
+        } else {
+          foundGold = parseInt((diceRoll + currentRoom.monsterProb) * 100); // cuanto mas peligroso mas oro hay
+          defaultGameState.player.hasSearched = true;
+        }
+      } else {
+        defaultGameState.player.hasSearched = true;
+      }
+      // TODO prob de que aparezca un monstruo si diceRoll es muy pequeño? y que tambien influya monsterProb
+
+      // distintos mensajes dependiendo de la cantidad encontrada
+      if (foundGold == 0) return "No has conseguido encontrar oro.";
+      else {
+        text += "Has encontrado " + foundGold + " piezas de oro.";
+        return text;
+      }
+    } else {
+      return "¡No puedes buscar oro en este lugar!";
+    }
+  }
+}
+
 // funcion que procesa el contenido de input y llama a una funcion distinta dependiendo del contenido de input para generar un mensaje
 function sendInput() {
   // contenido del input que intrudjo el jugador
-  let userInput = document.getElementById("command-input").value;
-  if (userInput == "Observar" || userInput == "O") {
+  let userInput = document.getElementById("command-input").value.toLowerCase();
+  if (userInput == "observar" || userInput == "o") {
+    deleteInput();
     logMessage(generateRoomDescription());
+  } else if (userInput == "buscar" || userInput == "b") {
+    deleteInput();
+    logMessage(searchGold());
   }
   // TODO elif con cada comando disponible (por ahora solo 1)
   else {
+    deleteInput();
     logMessage(
       "Comando no identificado. Pulsa ❓ Ayuda para ver todos los comandos. (función por implementar)"
     ); // TODO seccion de ayuda
   }
+}
+
+// funcion para resetear el input de comandos
+function deleteInput() {
+  document.getElementById("command-input").value = "";
 }
 
 function logMessage(text) {
@@ -458,6 +522,9 @@ function update() {
   // log
   let currentRoomName = findRoomByID(currentRoomID).name;
   logMessage("Has entrado en '" + currentRoomName + "'");
+
+  // reinicia la posibilidad de buscar oro
+  defaultGameState.player.hasSearched = false;
 
   // cambia imagenes de fondo
   currentRoomID = defaultGameState.player.currentRoom;
