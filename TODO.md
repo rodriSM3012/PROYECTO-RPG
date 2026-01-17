@@ -3,7 +3,7 @@
 - [ ] hacer mas pequeño seccion interact
 - [ ] hacer ui transparente?
 - [ ] poner iconos simples para atributos
-- [ ] boton de enviar en input ▶
+- [x] boton de enviar en input ▶
 - [ ] hacer que la imagen del enemigo aparezca por debajo del header
 - [ ] hacer gradiente en los bordes de las secciones de .interact
 - [x] poner link de imgs en REAMDE 
@@ -11,6 +11,10 @@
 - [ ] añadir efecto de sombra en los bordes de img del enemigo?
 - [ ] añadir mapa¿¿?
 - [ ] findRoomByID hace que spawnEnemy no funcione bien si no se actualiza en cada funcion
+- [ ] flechas de dpad que aparezcan en gris si no hay sala en esa direccion
+- [ ] logs mas antiguos en historyList se borran auto al ser >50
+- [ ] rehacer comandos disponibles con un array?
+- [ ] reducir espacio vacio en UI
 
 ### TAREA 5 DWEC
 
@@ -23,8 +27,8 @@
 - [x] movimiento del personaje
 	- [x] colocar id de la sala actual
 	- [x] al hacer clic en dpad que se actualice
-- [ ] mostrar imagen, nombre y descripcion de la sala
-- [ ] en la descripcion de la sala poner posibles salidas
+- [x] mostrar imagen, nombre y descripcion de la sala
+- [x] en la descripcion de la sala poner posibles salidas
 	- "Hay varias posibles salidas:
 	   Norte:[], Este: [], Sur: [], Oeste: []"
 	- cada nombre de las direcciones que tengan colores distintos
