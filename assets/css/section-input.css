@@ -11,7 +11,7 @@ section.command div.history div {
   background-color: rgb(255, 213, 159);
   color: rgb(26, 26, 26);
   /* añade relleno por los bordes  */
-  padding: 1rem;
+  padding: 0.5rem;
   /* redondea los bordes del menu  */
   border-radius: 10px;
 }
@@ -32,8 +32,11 @@ section.command div.history div ul li {
   font-size: 1.1rem;
   /* cambia el tipo de fuente de letra  */
   font-family: "Open Sans", sans-serif;
-  /* añade espacio por debajo de cada elemento para separarlos  */
-  margin-bottom: 5px;
+  /* añade margen a cada elemento */
+  margin: 5px 3px 5px 3px;
+  background-color: antiquewhite;
+  border-radius: 5px;
+  padding: 0.5rem;
 }
 
 /* estilo del input para introducir comandos y el boton para enviar */
