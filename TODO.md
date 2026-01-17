@@ -15,6 +15,10 @@
 - [ ] logs mas antiguos en historyList se borran auto al ser >50
 - [ ] rehacer comandos disponibles con un array?
 - [ ] reducir espacio vacio en UI
+- [ ] hacer comandos con variables por si hay que cambiarles el nombre
+- [ ] ajustar tamaño de enemigos
+- [ ] mensaje de cuando aparece un enemigo en color rojo
+- [ ] poner diferentes mensajes dependiendo de la cantidad de oro que encuentres
 
 ### TAREA 5 DWEC
 
@@ -35,10 +39,10 @@
 	- separado por lineas o en misma linea?
 - [x] aparicion de enemigos
 	- [x] cada vez que se avanza a una sala se mira el indice de aparicion de enemgios
-	- [ ] escribir nombre y descripcion en zona de mensajes
+	- [x] escribir nombre y descripcion en zona de mensajes
 	- [x] dentro de la probabilidad de enemigo hay 2% de que sea jefe
-- [ ] busqueda de oro
-	- [ ] boton para buscar
-	- [ ] solo se puede buscar si hay prob de que salga enemigo → boton en gris si no se puede?? y que diga por que no al pasar el raton por encima??
+- [x] busqueda de oro
+	- [x] boton para buscar
+	- [x] solo se puede buscar si hay prob de que salga enemigo → boton en gris si no se puede?? y que diga por que no al pasar el raton por encima??
 
-- [ ] comentar partes que sean esenciales
+- [x] comentar partes que sean esenciales
