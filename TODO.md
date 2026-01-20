@@ -1,24 +1,27 @@
+## DISEÑO
 - [ ] cambiar diseño de flechas de dpad
 	- [ ] cambiar hover a que se ilumine
 - [ ] hacer mas pequeño seccion interact
 - [ ] hacer ui transparente?
 - [ ] poner iconos simples para atributos
-- [x] boton de enviar en input ▶
 - [ ] hacer que la imagen del enemigo aparezca por debajo del header
 - [ ] hacer gradiente en los bordes de las secciones de .interact
+- [ ] añadir efecto de sombra en los bordes de img del enemigo?
+- [ ] flechas de dpad que aparezcan en gris si no hay sala en esa direccion
+- [ ] reducir espacio vacio en UI
+- [ ] mensaje de cuando aparece un enemigo en color rojo
+## FUNCIONALIDADES NUEVAS
+- [x] boton de enviar en input ▶
 - [x] poner link de imgs en REAMDE 
 - [ ] funcion para resetear defaultGameState (con save y load?)
-- [ ] añadir efecto de sombra en los bordes de img del enemigo?
 - [ ] añadir mapa¿¿?
-- [ ] findRoomByID hace que spawnEnemy no funcione bien si no se actualiza en cada funcion
-- [ ] flechas de dpad que aparezcan en gris si no hay sala en esa direccion
+- [ ] poner diferentes mensajes dependiendo de la cantidad de oro que encuentres
+## COSAS PARA ARREGLAR
 - [ ] logs mas antiguos en historyList se borran auto al ser >50
+- [ ] findRoomByID hace que spawnEnemy no funcione bien si no se actualiza en cada funcion
 - [ ] rehacer comandos disponibles con un array?
-- [ ] reducir espacio vacio en UI
 - [ ] hacer comandos con variables por si hay que cambiarles el nombre
 - [ ] ajustar tamaño de enemigos
-- [ ] mensaje de cuando aparece un enemigo en color rojo
-- [ ] poner diferentes mensajes dependiendo de la cantidad de oro que encuentres
 
 ### TAREA 5 DWEC
 
