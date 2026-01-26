@@ -10,18 +10,22 @@
 - [ ] flechas de dpad que aparezcan en gris si no hay sala en esa direccion
 - [ ] reducir espacio vacio en UI
 - [ ] mensaje de cuando aparece un enemigo en color rojo
+- [ ] numero del mensaje en el historial
 ## FUNCIONALIDADES NUEVAS
 - [x] boton de enviar en input ▶
 - [x] poner link de imgs en REAMDE 
 - [ ] funcion para resetear defaultGameState (con save y load?)
 - [ ] añadir mapa¿¿?
 - [ ] poner diferentes mensajes dependiendo de la cantidad de oro que encuentres
+- [ ] mover con WASD y flechas
 ## COSAS PARA ARREGLAR
 - [ ] logs mas antiguos en historyList se borran auto al ser >50
 - [ ] findRoomByID hace que spawnEnemy no funcione bien si no se actualiza en cada funcion
 - [ ] rehacer comandos disponibles con un array?
 - [ ] hacer comandos con variables por si hay que cambiarles el nombre
 - [ ] ajustar tamaño de enemigos
+- [ ] si no hay una habitacion adyacente no deberia poder moverte en esa dir
+- [ ] cantidad de dinero no se actualiza
 
 ### TAREA 5 DWEC
 
