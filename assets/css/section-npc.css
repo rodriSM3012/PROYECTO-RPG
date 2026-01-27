@@ -9,7 +9,7 @@ main section.img-npc {
 
 /* establece la altura de la imagen del enemigo  */
 main section.img-npc img {
-  height: 80vh;
+  height: 60vh;
 }
 /* estilo de la seccion con informacion del enemigo */
 section.info-npc {
