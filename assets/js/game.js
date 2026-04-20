@@ -210,8 +210,13 @@ const defaultGameState = {
 
 // en primer lugar se pregunta al usuario el nombre que le pondrá a su personaje
 // con un prompt en el navegador y se guarda en defaultGameState
-defaultGameState.player.name = prompt("Introduce el nombre de tu personaje: ");
-// defaultGameState.player.name = "sadasdadsa";
+if (!TEST_MODE) { // TEST_MODE → variable de archivo config.json que se cambia manualmente para desactivar que la pagina pida el nombre
+  defaultGameState.player.name = prompt(
+    "Introduce el nombre de tu personaje: "
+  );
+} else {
+  defaultGameState.player.name = "Tester";
+}
 
 let activeEnemy = -1; // guarda la id del enemigo que aparezca
 let currentRoomID; // guarda la id de la ubicacion
