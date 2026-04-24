@@ -38,6 +38,12 @@ export function generateDescription() {
       text +=
         " ubicación accesible en la dirección " + availableLocations[0] + ".";
     }
+
+    // si es una ubicacion con una tienda disponible tambien se incluye en la descripcion
+    if (currentRoom.isShop) {
+      text += " <br/><b>Puedes comprar pociones en una tienda cercana.<b/>";
+    }
+
     console.log(text);
     return text;
   } else {
