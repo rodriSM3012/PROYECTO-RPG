@@ -1,234 +1,35 @@
-// array con todos los datos del juego
-const defaultGameState = {
-  player: {
-    name: "",
-    health: 30,
-    strength: 14,
-    strengthBonus: 2,
-    defense: 12,
-    defenseBonus: 0,
-    currentRoom: 0, // se empieza siempre en la ciudad
-    gold: 300,
-    potions: 3,
-    hasSearched: false, // flag para permitir buscar oro 1 vez por cambio de ubicacion
-  },
-  map: {
-    rooms: [
-      // ciudad
-      {
-        id: 0,
-        monsterProb: 0.0,
-        isShop: false,
-        name: "Puerto del Atardecer",
-        description:
-          "Desde la penumbra de una ladera boscosa, emerge una ciudad portuaria bañada por una luz dorada y majestuosa. El aire huele a salitre y leña quemada mientras los galeones mecen sus mástiles sobre el agua. El murmullo lejano del puerto y la brisa fresca de montaña crean una calma profunda.",
-        // ids de las salas contiguas
-        north: -1,
-        south: -1,
-        west: -1,
-        east: 1, // fortaleza
-        // nombre de la imagen que se usara para cada ubicacion
-        img: "./assets/images/game/rooms/city.png",
-      },
-      // fortaleza
-      {
-        id: 1,
-        monsterProb: 0.0,
-        isShop: true,
-        name: "Bastión del Paso del Río",
-        description:
-          "Una imponente fortaleza de piedra se alza sobre un promontorio rocoso, dominando el cauce de un río turbulento. Los rayos de sol filtrados por las nubes iluminan los muros desgastados y las velas de los barcos que se aproximan. Se percibe el olor a tierra mojada y la fuerza de la corriente.",
-        north: -1,
-        south: 2, // mazmorra
-        west: 0, // ciudad
-        east: 3, // ruinas
-        img: "./assets/images/game/rooms/fortress.png",
-      },
-      // mazmorra
-      {
-        id: 2,
-        monsterProb: 0.9,
-        isShop: false,
-        name: "Mazmorra de los Trofeos Bestiales",
-        description:
-          "Un corredor gótico sumido en la oscuridad revela altares improvisados con cráneos de bestias y estandartes harapientos. La tenue luz de las velas lucha contra las sombras densas y el olor a cuero viejo. El ambiente es claustrofóbico, cargado de una tensión latente, como si el lugar aún fuera habitado.",
-        north: 1, // fortaleza
-        south: -1,
-        west: -1,
-        east: -1,
-        img: "./assets/images/game/rooms/monster-ruins.png",
-      },
-      // ruinas
-      {
-        id: 3,
-        monsterProb: 0.3,
-        isShop: false,
-        name: "Ciudadela de los Riscos Nublados",
-        description:
-          "Desde un risco elevado, se contemplan las ruinas de una civilización dorada suspendida sobre un abismo de nubes. El sol atraviesa el cielo brumoso, calentando los muros de piedra invadidos por la vegetación. Se siente la inmensidad del viento de altura y el rugido lejano de una cascada escondida.",
-        north: -1,
-        south: -1,
-        west: 1, // fortaleza
-        east: 4, //tierra maldita
-        img: "./assets/images/game/rooms/ruins.png",
-      },
-      // tierra maldita
-      {
-        id: 4,
-        monsterProb: 0.7,
-        isShop: false,
-        name: "Páramo de las Sombras Espectrales",
-        description:
-          "Un páramo lúgubre se extiende bajo un cielo tormentoso, donde árboles retorcidos parecen asfixiados por volutas de energía espectral cian. Se percibe un frío antinatural y el silencio opresivo de una tierra marchita, donde la niebla se arrastra entre raíces nudosas que parecen vigilar cada paso del intruso.",
-        north: -1,
-        south: 5, // cueva con setas
-        west: 3, // ruinas
-        east: 7, // templo
-        img: "./assets/images/game/rooms/cursed-lands.png",
-      },
-      // cueva con setas
-      {
-        id: 5,
-        monsterProb: 0.5,
-        isShop: false,
-        name: "Gruta de los Hongos Bioluminiscentes",
-        description:
-          "Bajo la cúpula de una caverna colosal, un ecosistema bioluminiscente cobra vida entre estalagmitas y puentes de madera destartalados. Hongos gigantes emiten un resplandor ámbar y cian, mientras el aire se siente denso, cargado de humedad y el dulce aroma de las esporas flotando en la penumbra.",
-        north: 4, //tierra maldita
-        south: -1,
-        west: -1,
-        east: 6, // cueva con lava
-        img: "./assets/images/game/rooms/mushroom-cave.png",
-      },
-      // cueva con lava
-      {
-        id: 6,
-        monsterProb: 0.7,
-        isShop: false,
-        name: "Forja del Magma Ancestral",
-        description:
-          "Una forja ancestral se despliega sobre ríos de lava incandescente que iluminan las estatuas de guerreros talladas en la roca. El calor es sofocante y el aire vibra con el rugido constante del magma. Cadenas masivas cuelgan del techo, sugiriendo una industria colosal ahora abandonada al fuego eterno.",
-        north: -1,
-        south: -1,
-        west: 5, // cueva con setas
-        east: -1,
-        img: "./assets/images/game/rooms/lava-cave.png",
-      },
-      // templo
-      {
-        id: 7,
-        monsterProb: 1,
-        isShop: false,
-        name: "Necrópolis de las Estatuas Profanadas",
-        description:
-          "En las entrañas de un templo profanado, estatuas monumentales custodian pasillos cubiertos de escombros y restos óseos. La luz violeta de las piras proyecta sombras alargadas sobre la piedra fría, mientras un eco metálico recorre las bóvedas, evocando la soledad de un lugar donde el tiempo y la muerte se detuvieron.",
-        north: -1,
-        south: -1,
-        west: 4, //tierra maldita
-        east: -1,
-        img: "./assets/images/game/rooms/temple.png",
-      },
-    ],
-    enemies: [
-      {
-        id: 0,
-        // spectator
-        name: "Contemplador",
-        // determina si es un enemigo mayor (boss) o menor
-        isBoss: true,
-        description:
-          "Desde un fondo gélido y vacío, surge esta aberración de pesadilla dominada por un ojo central hipnótico y fauces repletas de colmillos irregulares. De su cuerpo quitinoso brotan extremidades serpenteantes que terminan en bulbos oculares purpúreos, siempre vigilantes. La piel oscura y espinosa parece absorber la luz, transmitiendo una inquietante sensación de parálisis y escrutinio eterno.",
-        health: 400,
-        strength: 22,
-        defence: 14,
-        // nombre de la imagen que se usara para cada enemigo
-        img: "./assets/images/game/enemies/spectator.png",
-      },
-      {
-        id: 1,
-        // minotaur
-        name: "Minotauro",
-        isBoss: false,
-        description:
-          "Una mole de músculo y pelaje castaño se yergue con violencia, empuñando un garrote de piedra tosca. Sus cuernos asimétricos y ojos inyectados en sangre exudan una furia ciega.",
-        health: 200,
-        strength: 18,
-        defence: 16,
-        img: "./assets/images/game/enemies/minotaur.png",
-      },
-      {
-        id: 2,
-        // mimic
-        name: "Mímico",
-        isBoss: false,
-        description:
-          "Una aberración de madera y carne que rompe la ilusión del tesoro al desplegar una lengua purpúrea y viscosa entre fauces repletas de colmillos. Su presencia es la encarnación del engaño letal; emana un hambre insaciable que paraliza el corazón y domina el entorno como un depredador supremo.",
-        health: 150,
-        strength: 16,
-        defence: 18,
-        img: "./assets/images/game/enemies/mimic.png",
-      },
-      {
-        id: 3,
-        // woodwoad
-        name: "Guardián del bosque",
-        isBoss: false,
-        description:
-          "Una entidad de corteza nudosa y musgo vibrante se camufla entre ramas que sirven de escudo y maza. Sus ojos son apenas destellos de luz ancestral entre la madera retorcida.",
-        health: 180,
-        strength: 12,
-        defence: 17,
-        img: "./assets/images/game/enemies/woodwoad.png",
-      },
-      {
-        id: 4,
-        // redcap
-        name: "Duende del pantano",
-        isBoss: false,
-        description:
-          "Un humanoide encorvado de facciones grotescas y largas orejas puntiagudas observa con malicia desde su gorro escarlata. Sus manos ganchudas y botas de hierro sugieren una crueldad metódica.",
-        health: 100,
-        strength: 14,
-        defence: 10,
-        img: "./assets/images/game/enemies/redcap.png",
-      },
-      {
-        id: 5,
-        // kobold
-        name: "Kobold",
-        isBoss: false,
-        description:
-          "Este pequeño reptiloide de escamas rojizas acecha en tensión, aferrando una daga y una honda gastada. Su postura ágil y mirada astuta delatan a un superviviente oportunista.",
-        health: 80,
-        strength: 9,
-        defence: 12,
-        img: "./assets/images/game/enemies/kobold.png",
-      },
-    ],
-  },
-};
+import gameState from "./defaultGameState.js";
+
+import { TEST_MODE } from "./config.js";
+
+import { findRoomByID } from "./helper.js";
+
+import { showPlayerStats, moveMC } from "./player.js";
+import { showEnemyStats, spawnEnemy } from "./enemy.js";
+
+import { sendInput } from "./input.js";
+
+import { logMessage } from "./gameLog.js";
 
 // en primer lugar se pregunta al usuario el nombre que le pondrá a su personaje
-// con un prompt en el navegador y se guarda en defaultGameState
-if (!TEST_MODE) { // TEST_MODE → variable de archivo config.json que se cambia manualmente para desactivar que la pagina pida el nombre
-  defaultGameState.player.name = prompt(
-    "Introduce el nombre de tu personaje: "
-  );
+// con un prompt en el navegador y se guarda en localStorage
+if (!TEST_MODE) {
+  // TEST_MODE → variable de archivo config.js que se cambia manualmente para desactivar que la pagina pida el nombre
+  gameState.player.name = prompt("Introduce el nombre de tu personaje: ");
 } else {
-  defaultGameState.player.name = "Tester";
+  gameState.player.name = "Tester";
 }
 
-let activeEnemy = -1; // guarda la id del enemigo que aparezca
-let currentRoomID; // guarda la id de la ubicacion
+export let activeEnemy = -1;
+let currentRoomID = gameState.player.currentRoom; // guarda la id de la ubicacion
 // currentRoomID se actualiza automaticamente cada vez que el usuario pulsa el dpad:
 // pulsa boton → llama funcion moveMC() → la funcion llama update() automaticamente y currentRoomID se acutaliza
 
-// window.onload asegura que se procese despues de que la pagina cargue
-window.onload = function () {
+export function init() {
   logMessage(
     "Comandos disponibles: <br/>" +
       "- O, Observar → para mostrar descripción del lugar<br/>" +
-      "- B, Buscar → para buscar oro"
+      "- B, Buscar → para buscar oro",
   );
 
   // actualiza los datos en pantalla y procesa la logica de generar enemigos
@@ -264,290 +65,32 @@ window.onload = function () {
   });
   /*
   COMANDOS:
+    - A / Ayuda (muestra los comandos)
     - O / Observar
     - B / Buscar
+    - R / Regenerar (con poción)
+    - C / Comprar (solo en una tienda)
+    - 
     - TODO
   */
-};
-
-function showPlayerStats() {
-  // muestra el nombre
-  document.getElementById("MCname").innerHTML = defaultGameState.player.name;
-  // muestra la salud
-  document.getElementById("MChealth").innerHTML =
-    defaultGameState.player.health;
-  // muestra la fuerza + bonus
-  document.getElementById("MCstrength").innerHTML =
-    defaultGameState.player.strength +
-    " + " +
-    defaultGameState.player.strengthBonus;
-  // muestra la defensa + bonus
-  document.getElementById("MCdefense").innerHTML =
-    defaultGameState.player.defense +
-    " + " +
-    defaultGameState.player.defenseBonus;
-  // muestra el nombre de la ubicacion
-  let currentRoomID = defaultGameState.player.currentRoom;
-  document.getElementById("MCcurrentRoom").innerHTML =
-    findRoomByID(currentRoomID).name;
 }
 
-function showEnemyStats(enemyID) {
-  const sectionNPC = document.getElementById("sectionNPC");
-  const imgNPC = document.getElementById("imgNPC");
-  // si es -1 es que no se genero ningun enemigo
-  if (enemyID != -1) {
-    let currentEnemy = findEnemyByID(enemyID); // busca al enemigo con la id que se genero con spawnEnemy
-
-    // genera la seccion de datos del enemigo con un template
-    sectionNPC.innerHTML = `
-      <h2 class="name">${currentEnemy.name}</h2>
-      <p class="isBoss">${currentEnemy.isBoss ? "Jefe" : "&nbsp"}</p>
-      <ul>
-        <li><a href="#">Salud: </a>${currentEnemy.health}</li>
-        <li><a href="#">Fuerza: </a>${currentEnemy.strength}</li>
-        <li><a href="#">Defensa: </a>${currentEnemy.defence}</li>
-      </ul>
-      `;
-    // añade la imagen del enemigo
-    imgNPC.src = currentEnemy.img;
-    // añade un mensaje en el historial
-    logMessage("¡Ha aparecido un " + currentEnemy.name + "!");
-  } else {
-    // si no aparecio ningun enemigo actualiza los datos para que no muestren nada
-    sectionNPC.innerHTML = "";
-    imgNPC.src = "";
-  }
-}
-
-// funcion para buscar una ubicacion por la ID y devuelve el objeto encontrado o -1
-function findRoomByID(targetID) {
-  // usa find() para buscar room que tenga la misma id y si no la encuentra devuelve undefined
-  let foundRoom = defaultGameState.map.rooms.find(
-    (room) => room.id === targetID
-  );
-  if (foundRoom === undefined) {
-    return -1; // si no se encontro se devuelve -1
-  } else {
-    return foundRoom; // devuelve el objeto de room que se encontro con find()
-  }
-}
-
-// funcion para buscar el enemigo segun la ID y devuelve el objeto encontrado o -1
-function findEnemyByID(targetID) {
-  // usa find() para buscar enemy que tenga la misma id y si no la encuentra devuelve undefined
-  let foundEnemy = defaultGameState.map.enemies.find(
-    (enemy) => enemy.id === targetID
-  );
-  if (foundEnemy === undefined) {
-    return -1; // si no se encontro se devuelve -1
-  } else {
-    return foundEnemy; // devuelve el objeto de enemy que se encontro con find()
-  }
-}
-
-// funcion que genera un enemigo aleatoriamente y devuelve su id
-function spawnEnemy() {
-  let diceRoll = Math.random(); // num aleatorio entre 0 y 1
-  console.log(diceRoll); // test
-  let spawnedEnemyID;
-
-  let currentRoomID = defaultGameState.player.currentRoom;
-  let spawnChance = findRoomByID(currentRoomID).monsterProb; // extrae la probabilidad de que aparezca un mosntruo de la ubicacon en concreto
-  if (diceRoll < spawnChance) {
-    if (currentRoomID === 7) {
-      return 0; // si es la habitacion final siempre es el boss
-    } else {
-      // comprueba si el boss aparece con prob de 2%
-      let bossSpawn = Math.random() * 100; // random (0, 100)
-      if (bossSpawn < 2) {
-        return 0; // id del boss
-      } else {
-        // si el boss no aparece genera un mosntruo normal
-        spawnedEnemyID =
-          parseInt(Math.random() * (defaultGameState.map.enemies.length - 1)) +
-          1;
-        // numero entre 0 y 1 * numero total de enemigos y lo pasa a int → id aleatoria de enemigo
-        // -1 a length para no tener en cuenta un enemigo, luego suma 1 para evitar la id del boss
-        return spawnedEnemyID;
-      }
-    }
-  } else {
-    return -1; // no aparecio ningun enemigo
-  }
-}
-
-// funciones para mover al personaje dependiendo de la direccion
-function moveMC(dir) {
-  let currentRoomID = defaultGameState.player.currentRoom; // var para guardar la id de la ubicacion en la que esta el personaje
-  let nextRoomID; // inicializacion de var donde se guardara la id de la proxima sala
-  // asigna una id distinta segun la direccion que selecciono el jugador (dir)
-  switch (dir) {
-    case "u":
-      nextRoomID = findRoomByID(currentRoomID).north;
-      break;
-    case "r":
-      nextRoomID = findRoomByID(currentRoomID).east;
-      break;
-    case "d":
-      nextRoomID = findRoomByID(currentRoomID).south;
-      break;
-    case "l":
-      nextRoomID = findRoomByID(currentRoomID).west;
-      break;
-    default:
-      nextRoomID = -1; // por defecto es -1 = mismo valor que cuando no hay una sala conectada en esa direccion
-      break;
-  }
-  // actualiza curretnRoom del pj segun la siguiente sala
-  if (nextRoomID != -1) {
-    defaultGameState.player.currentRoom = nextRoomID;
-  }
-  // llama a la funcion para actualizar la interfaz despues de los cambios
-  update();
-}
-
-// funcion que devuelve un string con la descripcion del sitio y las posibles salidas
-function generateDescription() {
-  // comprueba que no haya un enemigo activo, si lo hay tendra prioridad la descripcion del enemigo antes que la ubicacion
-  if (activeEnemy == -1) {
-    let currentRoom = findRoomByID(currentRoomID);
-    let text = currentRoom.description; // extrae la descripcion de defaultGameState
-
-    let availableLocations = [];
-    let cont = 0; // lleva la cuenta de cuantas ubicaciones contiguas hay disponibles
-    // serie de ifs para comprobar cada una de las 4 direcciones si existen habitaciones
-    if (currentRoom.north != -1) availableLocations.push("norte");
-    if (currentRoom.east != -1) availableLocations.push("este");
-    if (currentRoom.south != -1) availableLocations.push("sur");
-    if (currentRoom.west != -1) availableLocations.push("oeste");
-    cont = availableLocations.length; // actualiza cont con la cantidad de ifs exitosos
-
-    text += "<br/>Hay " + cont;
-    // if para escribir en plural o singular
-    if (cont > 1) {
-      let excludeLast = availableLocations.slice(0, -1).join(", ");
-      let last = availableLocations[cont - 1];
-      text +=
-        " ubicaciones accesibles en las direcciones " +
-        excludeLast +
-        " y " +
-        last +
-        ".";
-    } else {
-      text +=
-        " ubicación accesible en la dirección " + availableLocations[0] + ".";
-    }
-    console.log(text);
-    return text;
-  } else {
-    // devuelve la descripcion del enemigo activo
-    return findEnemyByID(activeEnemy).description;
-  }
-}
-
-// funcion para buscar oro. devuelve un string que se mostrara en el log
-// TODO no se deberia poder buscar oro si el enemigo no ha sido derrotado
-function searchGold() {
-  let currentRoom = findRoomByID(currentRoomID); // objeto de la habitacion actual
-  let text = ""; // texto que se devolvera al final de la funcion
-
-  // comprueba que todavia no se ha buscado en esta sala
-  if (defaultGameState.player.hasSearched) {
-    return "Ya has buscado en este lugar.";
-  } else {
-    // solo se puede buscar si hay posibilidad de que aparezca un mosntruo
-    if (currentRoom.monsterProb > 0) {
-      let diceRoll = Math.random(); // num aleatorio entre 0 y 1
-      let foundGold = 0; // cantidad de oro encontrado
-
-      // cuanta mayor prob de monstruo mas probable es encontrar oro
-      if (diceRoll < currentRoom.monsterProb) {
-        if (diceRoll > 0.97) {
-          // 3% de posibilidad de encontrar muchisimo oro
-          // TODO poner mensaje distinto comprobando diceRoll
-          foundGold = parseInt((diceRoll + currentRoom.monsterProb) * 500);
-          defaultGameState.player.hasSearched = true;
-        } else {
-          foundGold = parseInt((diceRoll + currentRoom.monsterProb) * 100); // cuanto mas peligroso mas oro hay
-          defaultGameState.player.hasSearched = true;
-        }
-      } else {
-        defaultGameState.player.hasSearched = true;
-      }
-      // TODO prob de que aparezca un monstruo si diceRoll es muy pequeño? y que tambien influya monsterProb
-
-      // distintos mensajes dependiendo de la cantidad encontrada
-      if (foundGold == 0) return "No has conseguido encontrar oro.";
-      else {
-        text += "Has encontrado " + foundGold + " piezas de oro.";
-        return text;
-      }
-    } else {
-      return "¡No puedes buscar oro en este lugar!";
-    }
-  }
-}
-
-// funcion que procesa el contenido de input y llama a una funcion distinta dependiendo del contenido de input para generar un mensaje
-function sendInput() {
-  // contenido del input que intrudjo el jugador
-  let userInput = document.getElementById("command-input").value.toLowerCase();
-  if (userInput == "observar" || userInput == "o") {
-    deleteInput();
-    logMessage(generateDescription());
-  } else if (userInput == "buscar" || userInput == "b") {
-    deleteInput();
-    logMessage(searchGold());
-  }
-  // TODO elif con cada comando disponible
-  else {
-    deleteInput();
-    logMessage(
-      "Comando no identificado. Pulsa ❓ Ayuda para ver todos los comandos. (función por implementar)"
-    ); // TODO seccion de ayuda
-  }
-}
-
-// funcion para resetear el input de comandos
-function deleteInput() {
-  document.getElementById("command-input").value = "";
-}
-
-function logMessage(text) {
-  let historyList = document.getElementById("historyList");
-  const maxMessages = 50; // variable para establecer el maximo de mensajes posibles al mismo tiempo
-
-  // crea un elemento nuevo y se le inserta la variabel text como contenido con innerHTML
-  const newLi = document.createElement("li");
-  newLi.innerHTML = text;
-  historyList.appendChild(newLi); // se añade el elemento creado al historial
-
-  // asegura que siempre se vea el ultimo mensaje
-  historyList.scrollTop = historyList.scrollHeight;
-
-  // si la cantidad de mensajes (child) en historyList supera el maximo (maxMessages) borra el primero
-  if (historyList.childElementCount > maxMessages) {
-    historyList.removeChild(historyList.firstChild);
-  }
-}
-
-// funcion para actualizar los datos que se muestran en pantalla y la logica encargada de generar enemigos
-function update() {
-  currentRoomID = defaultGameState.player.currentRoom; // actualiza la ubicacion actual
+// funcion para actualizar los datos que se muestran en pantalla y procesar toda la logica del juego
+export function update() {
+  currentRoomID = gameState.player.currentRoom; // actualiza la ubicacion actual
   // log
   let currentRoomName = findRoomByID(currentRoomID).name;
   logMessage("Has entrado en '" + currentRoomName + "'.");
 
   activeEnemy = spawnEnemy(); // actualiza el enemigo en pantalla si lo hay
   showPlayerStats(); // actualiza datos del jugador en pantalla
-  showEnemyStats(activeEnemy); // actualiza datos del enemigo en pantalla
+  showEnemyStats(activeEnemy); // actualiza datos del enemigo en pantalla o borra los que habia si no hay enemigo
 
   // reinicia la posibilidad de buscar oro
-  defaultGameState.player.hasSearched = false;
+  gameState.player.hasSearched = false;
 
   // cambia imagenes de fondo
-  currentRoomID = defaultGameState.player.currentRoom;
+  currentRoomID = gameState.player.currentRoom;
   let imgSRC = findRoomByID(currentRoomID).img; // direccion de la imagen de la ubicacion objetivo
 
   let backgroundIMG = document.getElementById("imgBG"); // objeto del DOM de la img de fondo
