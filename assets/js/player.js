@@ -107,7 +107,6 @@ export function moveMC(dir) {
 
 // funcion para comprar una pocion a cambio de oro
 export function buyPotion() {
-  console.log(findRoomByID(gameState.player.currentRoom).isShop);
   // se comprueba que la localizacion tenga una tienda disponible
   if (findRoomByID(gameState.player.currentRoom).isShop) {
     if (gameState.player.gold >= 30) {
@@ -130,7 +129,13 @@ export function usePotion() {
   if (gameState.player.potions >= 1) {
     gameState.player.potions--; // se resta 1 pocion al usarla
     let heal = 5 + parseInt(Math.random() * 11); // valor de la vida regenerada (entre 5 y 15)
-    gameState.player.health += heal; // se regenera la vida al jugador
+    let currentHealth = gameState.player.health;
+    // se regenera la vida al jugador
+    if (currentHealth + heal > 30) {
+      gameState.player.health = 30;
+    } else {
+      gameState.player.health += heal;
+    }
     showPlayerStats(); // actualiza la interfaz para ver los cambios en la salud
     logMessage("Has regenerado " + heal + " puntos de vida.");
   } else {
