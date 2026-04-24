@@ -107,6 +107,7 @@ export function moveMC(dir) {
 
 // funcion para comprar una pocion a cambio de oro
 export function buyPotion() {
+  // se comprueba que haya oro suficiente
   if (gameState.player.gold >= 30) {
     gameState.player.gold -= 30; // cada pocion cuesta 30 de oro y se restan en gameState
     gameState.player.potions++; // suma 1 pocion al jugador
@@ -114,5 +115,19 @@ export function buyPotion() {
     logMessage("Has comprado una poción por 30 piezas de oro.");
   } else {
     logMessage("¡No tienes oro suficiente para comprar una poción!");
+  }
+}
+
+// funcion para usar una pocion
+export function usePotion() {
+  // se comprueba que haya oro suficiente
+  if (gameState.player.potions >= 1) {
+    gameState.player.potions--; // se resta 1 pocion al usarla
+    let heal = 5 + parseInt(Math.random() * 11); // valor de la vida regenerada (entre 5 y 15)
+    gameState.player.health += heal; // se regenera la vida al jugador
+    showPlayerStats(); // actualiza la interfaz para ver los cambios en la salud
+    logMessage("Has regenerado " + heal + " puntos de vida.");
+  } else {
+    logMessage("¡No tienes pociones disponibles!");
   }
 }
