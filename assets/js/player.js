@@ -131,13 +131,23 @@ export function usePotion() {
     let heal = 5 + parseInt(Math.random() * 11); // valor de la vida regenerada (entre 5 y 15)
     let currentHealth = gameState.player.health;
     // se regenera la vida al jugador
-    if (currentHealth + heal > 30) {
-      gameState.player.health = 30;
+    if (currentHealth + heal >= 30) {
+      gameState.player.health = 30; // si el valor recuperado supera el maximo, se le asigna el maximo en vez de sumar heal
+      heal = 30 - currentHealth; // reasigna el valor de heal para reflejar la cantidad recuperada real
     } else {
       gameState.player.health += heal;
     }
     showPlayerStats(); // actualiza la interfaz para ver los cambios en la salud
-    return "Has regenerado " + heal + " puntos de vida.";
+
+    let text; // texto que aparecera en el registro
+    if (heal === 0) {
+      text = "No has regenerado ningún punto de vida.";
+    } else if (heal === 1) {
+      text = "Has regenerado 1 punto de vida.";
+    } else {
+      text = "Has regenerado " + heal + " puntos de vida.";
+    }
+    return text;
   } else {
     return "¡No tienes pociones disponibles!";
   }
