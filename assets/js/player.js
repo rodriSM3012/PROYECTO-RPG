@@ -114,12 +114,12 @@ export function buyPotion() {
       gameState.player.gold -= 30; // cada pocion cuesta 30 de oro y se restan en gameState
       gameState.player.potions++; // suma 1 pocion al jugador
       showPlayerStats(); // actualiza la interfaz para ver los cambios en el oro y las pociones
-      logMessage("Has comprado una poción por 30 piezas de oro.");
+      return "Has comprado una poción por 30 piezas de oro.";
     } else {
-      logMessage("¡No tienes oro suficiente para comprar una poción!");
+      return "¡No tienes oro suficiente para comprar una poción!";
     }
   } else {
-    logMessage("No hay ninguna tienda disponible en esta ubicación.");
+    return "No hay ninguna tienda disponible en esta ubicación.";
   }
 }
 
@@ -137,8 +137,8 @@ export function usePotion() {
       gameState.player.health += heal;
     }
     showPlayerStats(); // actualiza la interfaz para ver los cambios en la salud
-    logMessage("Has regenerado " + heal + " puntos de vida.");
+    return "Has regenerado " + heal + " puntos de vida.";
   } else {
-    logMessage("¡No tienes pociones disponibles!");
+    return "¡No tienes pociones disponibles!";
   }
 }
