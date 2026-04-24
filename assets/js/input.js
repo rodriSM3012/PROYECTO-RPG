@@ -1,7 +1,7 @@
 import { logMessage } from "./gameLog.js";
 
 import { generateDescription } from "./map.js";
-import { searchGold } from "./player.js";
+import { buyPotion, searchGold, usePotion } from "./player.js";
 
 // funcion que procesa el contenido de input y llama a una funcion distinta dependiendo del contenido de input para generar un mensaje
 export function sendInput() {
@@ -13,6 +13,12 @@ export function sendInput() {
   } else if (userInput == "buscar" || userInput == "b") {
     deleteInput();
     logMessage(searchGold());
+  } else if (userInput == "comprar" || userInput == "c") {
+    deleteInput();
+    logMessage(buyPotion());
+  } else if (userInput == "recuperar" || userInput == "r") {
+    deleteInput();
+    logMessage(usePotion());
   }
   // TODO elif con cada comando disponible
   else {
