@@ -104,3 +104,15 @@ export function moveMC(dir) {
   // llama a la funcion para actualizar la interfaz despues de los cambios
   update();
 }
+
+// funcion para comprar una pocion a cambio de oro
+export function buyPotion() {
+  if (gameState.player.gold >= 30) {
+    gameState.player.gold -= 30; // cada pocion cuesta 30 de oro y se restan en gameState
+    gameState.player.potions++; // suma 1 pocion al jugador
+    showPlayerStats(); // actualiza la interfaz para ver los cambios en el oro y las pociones
+    logMessage("Has comprado una poción por 30 piezas de oro.");
+  } else {
+    logMessage("¡No tienes oro suficiente para comprar una poción!");
+  }
+}
