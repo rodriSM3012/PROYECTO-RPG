@@ -2,6 +2,7 @@ import { update } from "./game.js";
 import gameState from "./defaultGameState.js";
 
 import { findRoomByID } from "./helper.js";
+import { logMessage } from "./gameLog.js";
 
 // funcion para mostrar las estadisticas del jugador
 export function showPlayerStats() {
@@ -96,6 +97,9 @@ export function moveMC(dir) {
   // actualiza curretnRoom del pj segun la siguiente sala
   if (nextRoomID != -1) {
     gameState.player.currentRoom = nextRoomID;
+  } else {
+    logMessage("No hay ninguna ubicación disponible en esa dirección.");
+    return;
   }
   // llama a la funcion para actualizar la interfaz despues de los cambios
   update();
