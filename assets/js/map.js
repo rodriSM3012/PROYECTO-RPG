@@ -47,7 +47,8 @@ export function generateDescription() {
     console.log(text);
     return text;
   } else {
+    console.log(activeEnemy.id);
     // devuelve la descripcion del enemigo activo
-    return findEnemyByID(activeEnemy).description;
+    return activeEnemy.description;
   }
 }
