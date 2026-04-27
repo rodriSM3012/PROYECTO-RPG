@@ -1,8 +1,15 @@
-import { update } from "./game.js";
+import {
+  activeEnemy,
+  combatState,
+  fleeAttempt,
+  setFleeAttempt,
+  update,
+} from "./game.js";
 import gameState from "./defaultGameState.js";
 
 import { findRoomByID } from "./helper.js";
 import { logMessage } from "./gameLog.js";
+import { startCombatLoop } from "./combat.js";
 
 // funcion para mostrar las estadisticas del jugador
 export function showPlayerStats() {
@@ -74,31 +81,67 @@ export function searchGold() {
 
 // funciones para mover al personaje dependiendo de la direccion
 export function moveMC(dir) {
-  let currentRoomID = gameState.player.currentRoom; // var para guardar la id de la ubicacion en la que esta el personaje
-  let nextRoomID; // inicializacion de var donde se guardara la id de la proxima sala
-  // asigna una id distinta segun la direccion que selecciono el jugador (dir)
-  switch (dir) {
-    case "u":
-      nextRoomID = findRoomByID(currentRoomID).north;
-      break;
-    case "r":
-      nextRoomID = findRoomByID(currentRoomID).east;
-      break;
-    case "d":
-      nextRoomID = findRoomByID(currentRoomID).south;
-      break;
-    case "l":
-      nextRoomID = findRoomByID(currentRoomID).west;
-      break;
-    default:
-      nextRoomID = -1; // por defecto es -1 = mismo valor que cuando no hay una sala conectada en esa direccion
-      break;
-  }
-  // actualiza curretnRoom del pj segun la siguiente sala
-  if (nextRoomID != -1) {
-    gameState.player.currentRoom = nextRoomID;
+  // comprueba si el jugador esta en combate o no (si ya se ha iniciado el combate no se puede huir)
+  if (!combatState) {
+    // comprueba si hay algun enemigo en pantalla
+    if (activeEnemy != -1) {
+      // posibilidad del 10% de que el jugador no pueda huir
+      if (Math.random() <= 0.1) {
+        setFleeAttempt(fleeAttempt - 1); // se resta 1 intento de huida
+
+        // si ya no quedan oportunidades se inicia el combate
+        if (activeEnemy != -1 && fleeAttempt == 0) {
+          logMessage(
+            "¡No consguiste huir y te has visto forzado a iniciar el combate!",
+          );
+          startCombatLoop(activeEnemy);
+          return;
+        }
+
+        let text; // texto que se añade al mensaje para informar sobre los intentos de huida restantes
+        // comprobacion de singular o plural
+        if (fleeAttempt === 1) {
+          text = "Sólo te queda 1 oportunidad para huir.";
+        } else {
+          text = `Tienes otras ${fleeAttempt} oportunidades para huir.`;
+        }
+
+        logMessage(
+          "¡El enemigo te ha visto huir y te ha cortado el paso! " + text,
+        );
+        return;
+      }
+    }
+
+    let currentRoomID = gameState.player.currentRoom; // var para guardar la id de la ubicacion en la que esta el personaje
+    let nextRoomID; // inicializacion de var donde se guardara la id de la proxima sala
+    // asigna una id distinta segun la direccion que selecciono el jugador (dir)
+    switch (dir) {
+      case "u":
+        nextRoomID = findRoomByID(currentRoomID).north;
+        break;
+      case "r":
+        nextRoomID = findRoomByID(currentRoomID).east;
+        break;
+      case "d":
+        nextRoomID = findRoomByID(currentRoomID).south;
+        break;
+      case "l":
+        nextRoomID = findRoomByID(currentRoomID).west;
+        break;
+      default:
+        nextRoomID = -1; // por defecto es -1 = mismo valor que cuando no hay una sala conectada en esa direccion
+        break;
+    }
+    // actualiza curretnRoom del pj segun la siguiente sala
+    if (nextRoomID != -1) {
+      gameState.player.currentRoom = nextRoomID;
+    } else {
+      logMessage("No hay ninguna ubicación disponible en esa dirección.");
+      return;
+    }
   } else {
-    logMessage("No hay ninguna ubicación disponible en esa dirección.");
+    logMessage("No puedes huir en mitad de un combate.");
     return;
   }
   // llama a la funcion para actualizar la interfaz despues de los cambios
@@ -151,4 +194,41 @@ export function usePotion() {
   } else {
     return "¡No tienes pociones disponibles!";
   }
+}
+
+/* funcion para cambiar el equipamiento:
+    - recibe el objeto del equipamiento nuevo (nombre + tipo + bonus + booleano para equipar el objeto o no)
+    - modifica el bonus adecuado en gameState con el valor adecuado de bonus
+    - devuelve un texto que aparecera en el log
+*/
+export function changeEquipment(newEquipment) {
+  let text; // variable con el texto que se aparecera en el log
+
+  // determina el género del equipamiento para que aparezca el articulo adecuado
+  let char = newEquipment.name.charAt(2);
+  let articleGender = char === "a" ? "la" : "el";
+
+  let equipmentName = newEquipment.name.slice(3).trim(); // corta el un/una del nombre y lo guarda en la variable
+
+  // si doEquip = true es que el jugador selecciono equiparlo
+  if (newEquipment.doEquip) {
+    // guarda los valores del objeto en variables separadas (el nombre se asigno fuera del if)
+    let equipmentType = newEquipment.type;
+    let equipmentBonus = newEquipment.bonus;
+
+    // modifica el bonus adecuado del jugador segun el tipo de equipamiento
+    equipmentType == 0
+      ? (gameState.player.strengthBonus = equipmentBonus)
+      : (gameState.player.defenseBonus = equipmentBonus);
+
+    // crea el mensaje que se mostrara en el log
+    text =
+      `Te has equipado ${articleGender} ${equipmentName} y recibes un bonus de +${equipmentBonus} en la ` +
+      (equipmentType == 0 ? "fuerza." : "defensa.");
+  } else {
+    text = `No te has equipado ${articleGender} ${equipmentName} y lo has dejado en el suelo.`;
+  }
+
+  // devuelve el texto que aparecera en el log
+  return text;
 }

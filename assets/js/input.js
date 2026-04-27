@@ -1,7 +1,10 @@
 import { logMessage } from "./gameLog.js";
 
 import { generateDescription } from "./map.js";
-import { buyPotion, searchGold, usePotion } from "./player.js";
+import { buyPotion, changeEquipment, searchGold, usePotion } from "./player.js";
+
+import { activeEnemy, droppedEquipment, setDroppedEquipment } from "./game.js";
+import { startCombatLoop } from "./combat.js";
 
 // funcion que procesa el contenido de input y llama a una funcion distinta dependiendo del contenido de input para generar un mensaje
 export function sendInput() {
@@ -19,9 +22,33 @@ export function sendInput() {
   } else if (userInput == "recuperar" || userInput == "r") {
     deleteInput();
     logMessage(usePotion());
-  }
-  // TODO elif con cada comando disponible
-  else {
+  } else if (userInput == "atacar" || userInput == "a") {
+    deleteInput();
+    if (activeEnemy != -1) {
+      startCombatLoop(activeEnemy);
+    } else {
+      logMessage("No hay ningún enemigo cercano al que atacar.");
+    }
+  } else if (userInput == "s" || userInput == "si" || userInput == "sí") {
+    if (droppedEquipment != null) {
+      deleteInput();
+      droppedEquipment.doEquip = true; // actualiza doEquip para que si se equipe y cambien las estadisticas
+      logMessage(changeEquipment(droppedEquipment));
+      setDroppedEquipment(null);
+    } else {
+      deleteInput();
+      logMessage("No hay ningún mensaje que requiera confirmación.");
+    }
+  } else if (userInput == "n" || userInput == "no") {
+    if (droppedEquipment != null) {
+      deleteInput();
+      logMessage(changeEquipment(droppedEquipment));
+      setDroppedEquipment(null);
+    } else {
+      deleteInput();
+      logMessage("No hay ningún mensaje que requiera confirmación.");
+    }
+  } else {
     deleteInput();
     logMessage(
       "Comando no identificado. Pulsa ❓ Ayuda para ver todos los comandos. (función por implementar)",

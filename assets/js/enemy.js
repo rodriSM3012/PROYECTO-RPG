@@ -23,7 +23,9 @@ export function showEnemyStats(enemyID) {
     // añade la imagen del enemigo
     imgNPC.src = currentEnemy.img;
     // añade un mensaje en el historial
-    logMessage("¡Ha aparecido un " + currentEnemy.name + "!");
+    logMessage(
+      `¡Ha aparecido un ${currentEnemy.name}! Introduce "atacar" o "a" para iniciar el combate. `,
+    );
   } else {
     // si no aparecio ningun enemigo actualiza los datos para que no muestren nada
     sectionNPC.innerHTML = "";
