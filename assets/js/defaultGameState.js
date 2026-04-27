@@ -138,7 +138,7 @@ const defaultGameState = {
         isBoss: true,
         description:
           "Desde un fondo gélido y vacío, surge esta aberración de pesadilla dominada por un ojo central hipnótico y fauces repletas de colmillos irregulares. De su cuerpo quitinoso brotan extremidades serpenteantes que terminan en bulbos oculares purpúreos, siempre vigilantes. La piel oscura y espinosa parece absorber la luz, transmitiendo una inquietante sensación de parálisis y escrutinio eterno.",
-        health: 400,
+        health: 100,
         strength: 22,
         defence: 14,
         // nombre de la imagen que se usara para cada enemigo
@@ -151,7 +151,7 @@ const defaultGameState = {
         isBoss: false,
         description:
           "Una mole de músculo y pelaje castaño se yergue con violencia, empuñando un garrote de piedra tosca. Sus cuernos asimétricos y ojos inyectados en sangre exudan una furia ciega.",
-        health: 200,
+        health: 50,
         strength: 18,
         defence: 16,
         img: "./assets/images/game/enemies/minotaur.png",
@@ -163,7 +163,7 @@ const defaultGameState = {
         isBoss: false,
         description:
           "Una aberración de madera y carne que rompe la ilusión del tesoro al desplegar una lengua purpúrea y viscosa entre fauces repletas de colmillos. Su presencia es la encarnación del engaño letal; emana un hambre insaciable que paraliza el corazón y domina el entorno como un depredador supremo.",
-        health: 150,
+        health: 40,
         strength: 16,
         defence: 18,
         img: "./assets/images/game/enemies/mimic.png",
@@ -175,7 +175,7 @@ const defaultGameState = {
         isBoss: false,
         description:
           "Una entidad de corteza nudosa y musgo vibrante se camufla entre ramas que sirven de escudo y maza. Sus ojos son apenas destellos de luz ancestral entre la madera retorcida.",
-        health: 180,
+        health: 50,
         strength: 12,
         defence: 17,
         img: "./assets/images/game/enemies/woodwoad.png",
@@ -187,7 +187,7 @@ const defaultGameState = {
         isBoss: false,
         description:
           "Un humanoide encorvado de facciones grotescas y largas orejas puntiagudas observa con malicia desde su gorro escarlata. Sus manos ganchudas y botas de hierro sugieren una crueldad metódica.",
-        health: 100,
+        health: 20,
         strength: 14,
         defence: 10,
         img: "./assets/images/game/enemies/redcap.png",
@@ -199,7 +199,7 @@ const defaultGameState = {
         isBoss: false,
         description:
           "Este pequeño reptiloide de escamas rojizas acecha en tensión, aferrando una daga y una honda gastada. Su postura ágil y mirada astuta delatan a un superviviente oportunista.",
-        health: 80,
+        health: 15,
         strength: 9,
         defence: 12,
         img: "./assets/images/game/enemies/kobold.png",
