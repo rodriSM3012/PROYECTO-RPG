@@ -24,7 +24,9 @@ export function startCombatLoop(activeEnemy) {
   logMessage("¡Comienza el combate contra " + enemyName + "!");
 
   // inicia
-  combatRound(enemyName, enemyHealth, enemyDefence, enemyStrength);
+  setTimeout(() => {
+    combatRound(enemyName, enemyHealth, enemyDefence, enemyStrength);
+  }, 3000);
 }
 
 // funcion que recrea el bucle del combate. no tiene ningun bucle while por que se llama de forma recursiva
@@ -36,7 +38,7 @@ function combatRound(enemyName, enemyHealth, enemyDefence, enemyStrength) {
   if (enemyAttackValue > 0) {
     gameState.player.health -= enemyAttackValue; // resta vida al jugador segun el ataque
     logMessage(
-      `¡El ${enemyName} te ha atacado y has recibido ${enemyAttackValue} puntos de daño!`,
+      `<span class = "enemyAttack">¡El ${enemyName} te ha atacado y has recibido <b>${enemyAttackValue}</b> puntos de daño!</span>`,
     );
   } else {
     logMessage("¡Has conseguido evitar el ataque!");
@@ -59,7 +61,7 @@ function combatRound(enemyName, enemyHealth, enemyDefence, enemyStrength) {
   if (playerAttackValue > 0) {
     enemyHealth -= playerAttackValue; // resta vida al jugador segun el ataque
     logMessage(
-      `Has atacado al ${enemyName} y le has infligido ${playerAttackValue} puntos de daño.`,
+      `<span class = "playerAttack">Has atacado al ${enemyName} y le has infligido <b>${playerAttackValue}</b> puntos de daño.</span>`,
     );
   } else {
     logMessage("¡El enemigo ha evitado el ataque!");
@@ -100,7 +102,7 @@ function playerAttack(player, enemyDefence) {
 
 // funcion que se ejecuta uando el jugador se defiende de un ataque. devuelve un valor que se restará al ataque recibido
 function playerDefend(player) {
-  return player.defense * Math.random() + player.defenseBonus;
+  return player.defense * Math.random() + player.defenseBonus * 0.5;
 }
 
 // funcion que se ejecuta cuando el enemigo ataca. devuelve el valor del ataque que se restara a la vida del jugador

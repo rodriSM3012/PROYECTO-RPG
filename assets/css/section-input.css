@@ -81,3 +81,16 @@ section.command input {
   /* border: 5px solid #c49961; TODO*/
   transition-duration: 200ms;
 }
+
+/* añade diferentes colores a las acciones o eventos del log */
+li span.playerAttack {
+  color: rgb(50, 56, 138);
+}
+
+li span.enemyAttack {
+  color: rgb(138, 50, 50);
+}
+
+li span.heal {
+  color: rgb(50, 138, 50);
+}

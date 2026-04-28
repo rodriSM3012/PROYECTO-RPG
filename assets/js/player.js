@@ -16,7 +16,8 @@ export function showPlayerStats() {
   // muestra el nombre
   document.getElementById("MCname").innerHTML = gameState.player.name;
   // muestra la salud
-  document.getElementById("MChealth").innerHTML = gameState.player.health;
+  document.getElementById("MChealth").innerHTML =
+    gameState.player.health <= 0 ? 0 : gameState.player.health;
   // muestra la fuerza + bonus
   document.getElementById("MCstrength").innerHTML =
     gameState.player.strength + " + " + gameState.player.strengthBonus;
@@ -35,47 +36,57 @@ export function showPlayerStats() {
 }
 
 // funcion para buscar oro. devuelve un string que se mostrara en el log
-// TODO no se deberia poder buscar oro si el enemigo no ha sido derrotado
 export function searchGold() {
-  let currentRoom = findRoomByID(gameState.player.currentRoom); // objeto de la habitacion actual
-  let text = ""; // texto que se devolvera al final de la funcion
+  // no se puede` buscar oro si el enemigo no ha sido derrotado
+  if (activeEnemy == -1) {
+    let currentRoom = findRoomByID(gameState.player.currentRoom); // objeto de la habitacion actual
+    let text = ""; // texto que se devolvera al final de la funcion
 
-  // comprueba que todavia no se ha buscado en esta sala
-  if (gameState.player.hasSearched) {
-    return "Ya has buscado en este lugar.";
-  } else {
-    // solo se puede buscar si hay posibilidad de que aparezca un mosntruo
-    if (currentRoom.monsterProb > 0) {
-      let diceRoll = Math.random(); // num aleatorio entre 0 y 1
-      let foundGold = 0; // cantidad de oro encontrado
+    // comprueba que todavia no se ha buscado en esta sala
+    if (gameState.player.hasSearched) {
+      return "Ya has buscado en este lugar.";
+    } else {
+      // solo se puede buscar si hay posibilidad de que aparezca un mosntruo
+      if (currentRoom.monsterProb > 0) {
+        let diceRoll = Math.random(); // num aleatorio entre 0 y 1
+        let foundGold = 0; // cantidad de oro encontrado
+        let treasureChest = false;
 
-      // cuanta mayor prob de monstruo mas probable es encontrar oro
-      if (diceRoll < currentRoom.monsterProb) {
-        if (Math.random() > 0.97) {
-          // 3% de posibilidad de encontrar muchisimo oro
-          // TODO poner mensaje distinto comprobando diceRoll
-          foundGold = parseInt((diceRoll + currentRoom.monsterProb) * 500);
-          gameState.player.hasSearched = true;
+        // cuanta mayor prob de monstruo mas probable es encontrar oro
+        if (diceRoll < currentRoom.monsterProb + 0.2) {
+          if (Math.random() > 0.97) {
+            // 3% de posibilidad de encontrar muchisimo oro
+            foundGold = parseInt((diceRoll + currentRoom.monsterProb) * 500);
+            gameState.player.hasSearched = true;
+            treasureChest = true;
+          } else {
+            foundGold = parseInt((diceRoll + currentRoom.monsterProb) * 100); // cuanto mas peligroso mas oro hay
+            gameState.player.hasSearched = true;
+          }
         } else {
-          foundGold = parseInt((diceRoll + currentRoom.monsterProb) * 100); // cuanto mas peligroso mas oro hay
           gameState.player.hasSearched = true;
         }
-      } else {
-        gameState.player.hasSearched = true;
-      }
-      // TODO prob de que aparezca un monstruo si diceRoll es muy pequeño? y que tambien influya monsterProb
+        // TODO prob de que aparezca un monstruo si diceRoll es muy pequeño? y que tambien influya monsterProb
 
-      // distintos mensajes dependiendo de la cantidad encontrada
-      if (foundGold == 0) return "No has conseguido encontrar oro.";
-      else {
-        gameState.player.gold += foundGold; // actualiza el gameState con el oro encontrado
-        showPlayerStats(); // actualiza la interfaz para mostrar el oro encontrado
-        text += "Has encontrado " + foundGold + " piezas de oro.";
-        return text;
+        // distintos mensajes dependiendo de la cantidad encontrada
+        if (foundGold == 0) return "No has conseguido encontrar oro.";
+        else if (treasureChest) {
+          text +=
+            "¡Has encontrado un cofre del tesoro lleno de monedas! Consigues " +
+            foundGold +
+            " piezas de oro.";
+        } else {
+          gameState.player.gold += foundGold; // actualiza el gameState con el oro encontrado
+          showPlayerStats(); // actualiza la interfaz para mostrar el oro encontrado
+          text += "Has encontrado " + foundGold + " piezas de oro.";
+          return text;
+        }
+      } else {
+        return "¡No puedes buscar oro en este lugar!";
       }
-    } else {
-      return "¡No puedes buscar oro en este lugar!";
     }
+  } else {
+    return "¡No puedes buscar oro mientras haya un enemigo cerca!";
   }
 }
 
@@ -85,14 +96,14 @@ export function moveMC(dir) {
   if (!combatState) {
     // comprueba si hay algun enemigo en pantalla
     if (activeEnemy != -1) {
-      // posibilidad del 10% de que el jugador no pueda huir
-      if (Math.random() <= 0.1) {
+      // posibilidad del 50% de que el jugador no pueda huir
+      if (Math.random() <= 0.5) {
         setFleeAttempt(fleeAttempt - 1); // se resta 1 intento de huida
 
         // si ya no quedan oportunidades se inicia el combate
         if (activeEnemy != -1 && fleeAttempt == 0) {
           logMessage(
-            "¡No consguiste huir y te has visto forzado a iniciar el combate!",
+            "¡No conseguiste huir y te has visto forzado a iniciar el combate!",
           );
           startCombatLoop(activeEnemy);
           return;
@@ -152,12 +163,13 @@ export function moveMC(dir) {
 export function buyPotion() {
   // se comprueba que la localizacion tenga una tienda disponible
   if (findRoomByID(gameState.player.currentRoom).isShop) {
-    if (gameState.player.gold >= 30) {
+    let potionCost = 80;
+    if (gameState.player.gold >= potionCost) {
       // se comprueba que haya oro suficiente
-      gameState.player.gold -= 30; // cada pocion cuesta 30 de oro y se restan en gameState
+      gameState.player.gold -= potionCost; // cada pocion cuesta 80 de oro y se restan en gameState
       gameState.player.potions++; // suma 1 pocion al jugador
       showPlayerStats(); // actualiza la interfaz para ver los cambios en el oro y las pociones
-      return "Has comprado una poción por 30 piezas de oro.";
+      return "Has comprado una poción por " + potionCost + " piezas de oro.";
     } else {
       return "¡No tienes oro suficiente para comprar una poción!";
     }
@@ -182,13 +194,13 @@ export function usePotion() {
     }
     showPlayerStats(); // actualiza la interfaz para ver los cambios en la salud
 
-    let text; // texto que aparecera en el registro
+    let text = `<span class = "heal">Has usado una poción `; // texto que aparecera en el registro
     if (heal === 0) {
-      text = "No has regenerado ningún punto de vida.";
+      text += " pero no has regenerado ningún punto de vida.</span>";
     } else if (heal === 1) {
-      text = "Has regenerado 1 punto de vida.";
+      text += " y has recuperado  <b>1</b> punto de vida.</span>";
     } else {
-      text = "Has regenerado " + heal + " puntos de vida.";
+      text += "y has recuperado <b>" + heal + "</b> puntos de vida.</span>";
     }
     return text;
   } else {
@@ -223,8 +235,10 @@ export function changeEquipment(newEquipment) {
 
     // crea el mensaje que se mostrara en el log
     text =
-      `Te has equipado ${articleGender} ${equipmentName} y recibes un bonus de +${equipmentBonus} en la ` +
+      `Te has equipado ${articleGender} ${equipmentName} y recibes un bonus de +${equipmentBonus} en ` +
       (equipmentType == 0 ? "fuerza." : "defensa.");
+
+    showPlayerStats(); // actualiza la interfaz con el nuevo bonus
   } else {
     text = `No te has equipado ${articleGender} ${equipmentName} y lo has dejado en el suelo.`;
   }

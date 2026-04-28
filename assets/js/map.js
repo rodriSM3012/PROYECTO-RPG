@@ -41,7 +41,7 @@ export function generateDescription() {
 
     // si es una ubicacion con una tienda disponible tambien se incluye en la descripcion
     if (currentRoom.isShop) {
-      text += " <br/><b>Puedes comprar pociones en una tienda cercana.</b>";
+      text += " <br/><b>En una tienda cercana venden pociones por 80 de oro cada una.</b>";
     }
 
     console.log(text);
