@@ -9,7 +9,7 @@ import { showEnemyStats, spawnEnemy } from "./enemy.js";
 
 import { sendInput } from "./input.js";
 
-import { logMessage } from "./gameLog.js";
+import { logMessage, showHelp } from "./gameLog.js";
 
 import { saveGame, loadGame } from "./saveManager.js";
 
@@ -39,14 +39,8 @@ let currentRoomID = gameState.player.currentRoom; // guarda la id de la ubicacio
 // pulsa boton → llama funcion moveMC() → la funcion llama update() automaticamente y currentRoomID se acutaliza
 
 export function init() {
-  logMessage(
-    "Comandos disponibles: <br/>" +
-      "- O, Observar → para mostrar descripción del lugar<br/>" +
-      "- B, Buscar → para buscar oro<br/>" +
-      "- C, Comprar → para comprar una poción en ciertas ubicaciones<br/>" +
-      "- R, Recuperar → para recuperar los puntos de vida con una poción<br/>" +
-      "- A, Atacar → para atacar al enemigo presente",
-  );
+  // muestra todos los comandos disponibles
+  showHelp();
 
   // actualiza los datos en pantalla y procesa la logica de generar enemigos
   update();
@@ -87,6 +81,10 @@ export function init() {
   });
   // añade el eventListener para el boton de cargar la partida
   loadButton.addEventListener("click", loadGame);
+
+  // añade el eventListener al boton de ayuda
+  let helpButton = document.getElementById("help");
+  helpButton.addEventListener("click", showHelp);
 
   // añade eventListener al boton de enviar comandos
   let submitCommand = document.getElementById("submitCommand");

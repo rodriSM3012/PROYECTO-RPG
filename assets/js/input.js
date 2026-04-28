@@ -51,8 +51,8 @@ export function sendInput() {
   } else {
     deleteInput();
     logMessage(
-      "Comando no identificado. Pulsa ❓ Ayuda para ver todos los comandos. (función por implementar)",
-    ); // TODO seccion de ayuda
+      "Comando no identificado. Pulsa ❓ Ayuda para ver todos los comandos.",
+    );
   }
 }
 
