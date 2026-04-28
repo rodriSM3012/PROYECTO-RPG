@@ -11,6 +11,8 @@ import { sendInput } from "./input.js";
 
 import { logMessage } from "./gameLog.js";
 
+import { saveGame, loadGame } from "./saveManager.js";
+
 // en primer lugar se pregunta al usuario el nombre que le pondrá a su personaje
 // con un prompt en el navegador y se guarda en localStorage
 if (!TEST_MODE) {
@@ -69,6 +71,23 @@ export function init() {
     moveMC("l");
   });
 
+  // obtiene los botones de guardar/cargar a partir del id del elemento
+  let saveButton = document.getElementById("save");
+  let loadButton = document.getElementById("load");
+
+  // añade el eventListener para el boton de guardar la partida
+  saveButton.addEventListener("click", () => {
+    saveGame(
+      activeEnemy,
+      combatState,
+      droppedEquipment,
+      fleeAttempt,
+      slainEnemies,
+    );
+  });
+  // añade el eventListener para el boton de cargar la partida
+  loadButton.addEventListener("click", loadGame);
+
   // añade eventListener al boton de enviar comandos
   let submitCommand = document.getElementById("submitCommand");
   submitCommand.addEventListener("click", sendInput);
@@ -89,26 +108,36 @@ export function init() {
 }
 
 // funcion para actualizar los datos que se muestran en pantalla y procesar toda la logica del juego
-export function update() {
+// si recibe la variable loadingGame con cualquier valor se salta parte del codigo,
+export function update(loadingGame) {
   currentRoomID = gameState.player.currentRoom; // actualiza la ubicacion actual
-  // log
-  let currentRoomName = findRoomByID(currentRoomID).name;
-  logMessage("Has entrado en '" + currentRoomName + "'.");
 
-  let activeEnemyID = spawnEnemy(); // actualiza el enemigo en pantalla si lo hay
+  let currentRoomName = findRoomByID(currentRoomID).name;
+  let activeEnemyID = -1;
+  if (activeEnemy != -1) {
+    activeEnemyID = activeEnemy.id; // obtiene la id del enemigo presente
+  }
+
+  if (loadingGame == null) {
+    // log
+    logMessage("Has entrado en '" + currentRoomName + "'.");
+
+    // reinicia la posibilidad de buscar oro
+    gameState.player.hasSearched = false;
+    // reinicia las oportunidades de huida
+    fleeAttempt = 3;
+    // reinicia el equipo disponible
+    droppedEquipment = null;
+
+    activeEnemyID = spawnEnemy(); // actualiza el enemigo en pantalla al cambiar de sala
+  }
+
   showPlayerStats(); // actualiza datos del jugador en pantalla
   showEnemyStats(activeEnemyID); // actualiza datos del enemigo en pantalla o borra los que habia si no hay enemigo
 
   // se actualiza la variable activeEnemy definida fuera de la funcion con el enemigo correspondiente segun la id obtenida de spawnEnemy()
   activeEnemy = findEnemyByID(activeEnemyID);
   console.log(activeEnemy);
-
-  // reinicia la posibilidad de buscar oro
-  gameState.player.hasSearched = false;
-  // reinicia las oportunidades de huida
-  fleeAttempt = 3;
-  // reinicia el equipo disponible
-  droppedEquipment = null;
 
   // cambia imagenes de fondo
   currentRoomID = gameState.player.currentRoom;
@@ -133,7 +162,12 @@ export function setFleeAttempt(value) {
   fleeAttempt = value;
 }
 
-// funcion para poder actualizar slainEnemies desde combat.js
+// funcion para poder modificar slainEnemies desde saveManager.js
+export function setSlainEnemies(value) {
+  slainEnemies = value;
+}
+
+// funcion para poder incrementar en 1 slainEnemies desde combat.js
 export function increaseSlainEnemies() {
   slainEnemies++;
 }
