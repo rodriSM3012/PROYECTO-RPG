@@ -9,7 +9,8 @@ header {
   width: auto;
   /* mueve el titulo ligeramente abajo para que este mas en el centro  */
   align-items: center;
-  margin: 1rem;
+  padding: 1rem;
+  background-color: rgb(6, 14, 41);
 }
 
 /* estilo del titulo/logo  */
@@ -28,6 +29,11 @@ header nav {
   display: flex;
   /* establece un hueco entre los botones  */
   gap: 1rem;
+}
+
+/* respeta el atributo hidden del nav (display:flex lo sobreescribia) */
+header nav[hidden] {
+  display: none;
 }
 
 /* estilo de los botones del navbar  */

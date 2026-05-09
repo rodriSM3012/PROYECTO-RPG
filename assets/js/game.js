@@ -39,6 +39,9 @@ let currentRoomID = gameState.player.currentRoom; // guarda la id de la ubicacio
 // pulsa boton → llama funcion moveMC() → la funcion llama update() automaticamente y currentRoomID se acutaliza
 
 export function init() {
+  // incluye el nombre del personaje que escribio el jugador en el prompt inicial
+  document.getElementById("player-name").innerHTML = gameState.player.name;
+
   // muestra todos los comandos disponibles
   showHelp();
 
@@ -86,6 +89,10 @@ export function init() {
   let helpButton = document.getElementById("help");
   helpButton.addEventListener("click", showHelp);
 
+  // añade el eventListener al boton de empezar el juego al iniciar la pagina por primera vez
+  let startButton = document.getElementById("start-game");
+  startButton.addEventListener("click", startGame);
+
   // añade eventListener al boton de enviar comandos
   let submitCommand = document.getElementById("submitCommand");
   submitCommand.addEventListener("click", sendInput);
@@ -103,6 +110,19 @@ export function init() {
     - A / Atacar (si hay un enemigo)
     - TODO
   */
+}
+
+// funcion para ocultar la pantalla inicial y mostrar el resto del juego que normalmente esta oculto
+export function startGame() {
+  // obtiene los contenedores adecuados a partir de la id
+  let startScreen = document.getElementById("start-screen");
+  let gameScreen = document.getElementById("game");
+  let gameButtons = document.getElementById("hideInStartScreen");
+
+  gameScreen.hidden = false;
+  gameButtons.hidden = false;
+
+  startScreen.style.display = "none";
 }
 
 // funcion para actualizar los datos que se muestran en pantalla y procesar toda la logica del juego

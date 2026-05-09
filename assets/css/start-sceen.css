@@ -1,0 +1,73 @@
+#start-screen div.buttonContainer {
+  display: flex;
+
+  justify-content: center;
+}
+
+#start-screen div.buttonContainer button {
+  margin-top: 5vh;
+
+  padding: 1.5rem 5rem 1.5rem 5rem;
+
+  border: solid 10px rgb(160, 128, 85);
+  border-radius: 30px;
+
+  font-family: "Macondo", cursive;
+  font-size: 3rem;
+  color: rgb(67, 67, 67);
+
+  background-color: antiquewhite;
+}
+
+div p.welcomeMessage {
+  color: antiquewhite;
+
+  text-shadow:
+    1px 1px 2px black,
+    -1px 1px 2px black,
+    1px -1px 2px black,
+    -1px -1px 2px black,
+    3px 3px 6px rgb(67, 67, 67);
+
+  font-family: "Open Sans", sans-serif;
+  font-weight: 500;
+  font-size: 1.5rem;
+
+  padding-top: 63vh;
+}
+
+#start-screen {
+  text-align: center;
+  /* background-color: rgb(222, 222, 222); */
+
+  height: 100vh;
+  display: flex;
+  flex-flow: column;
+}
+
+#start-screen-bg {
+  /* obliga a la imagen a ocupar toda la anchura de la pantalla  */
+  min-width: 100%;
+  /* ajusta el espacio que ocupa verticalmente al contenedor en el que esta  */
+  height: 100%;
+  /* oculta el resto de la imagen que no entra y mantiene el aspect ratio  */
+  object-fit: cover;
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  z-index: -1;
+}
+
+#intro-video {
+  width: 80vh;
+
+  position: absolute;
+
+  top: 40%;
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+
+  padding: 1rem;
+  background-color: rgb(6, 14, 41);
+}

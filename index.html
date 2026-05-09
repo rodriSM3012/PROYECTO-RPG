@@ -20,7 +20,7 @@
         <h1>PROYECTO RPG</h1>
       </section>
       <!-- seccion con botones de sistema -->
-      <nav>
+      <nav id="hideInStartScreen" hidden>
         <button id="save">💾 Guardar</button>
         <button id="load">📂 Cargar</button>
         <button id="help">❓ Ayuda</button>
@@ -28,73 +28,100 @@
     </header>
 
     <main>
-      <!-- seccion con imagen de fondo -->
-      <section class="background-img">
-        <img id="imgBG" src="" alt="" />
-      </section>
-      <!-- seccion con enemigo/personaje -->
-      <section class="img-npc">
-        <img id="imgNPC" src="" alt="" />
-      </section>
-      <div class="interact">
-        <!-- informacion del personaje y del enemigo -->
-        <section class="info-npc" id="sectionNPC">
-          <!-- seccion info del enemigo  -->
+      <div id="game" hidden>
+        <!-- seccion con imagen de fondo -->
+        <section class="background-img">
+          <img id="imgBG" src="" alt="" />
         </section>
-        <!-- seccion info personaje princ  -->
-        <section class="info-mc">
-          <div>
-            <h2><a href="#" id="MCname"></a></h2>
-            <ul>
-              <li><a href="#">Salud: </a><span id="MChealth"></span> / 30</li>
-              <li><a href="#">Fuerza: </a><span id="MCstrength"></span></li>
-              <li><a href="#">Defensa: </a><span id="MCdefense"></span></li>
-              <li>
-                <a href="#">Ubicación: </a><span id="MCcurrentRoom"></span>
+        <!-- seccion con enemigo/personaje -->
+        <section class="img-npc">
+          <img id="imgNPC" src="" alt="" />
+        </section>
+        <div class="interact">
+          <!-- informacion del personaje y del enemigo -->
+          <section class="info-npc" id="sectionNPC">
+            <!-- seccion info del enemigo  -->
+          </section>
+          <!-- seccion info personaje princ  -->
+          <section class="info-mc">
+            <div>
+              <h2><a href="#" id="MCname"></a></h2>
+              <ul>
+                <li><a href="#">Salud: </a><span id="MChealth"></span> / 30</li>
+                <li><a href="#">Fuerza: </a><span id="MCstrength"></span></li>
+                <li><a href="#">Defensa: </a><span id="MCdefense"></span></li>
+                <li>
+                  <a href="#">Ubicación: </a><span id="MCcurrentRoom"></span>
+                </li>
+              </ul>
+            </div>
+            <ul class="object">
+              <li class="gold">
+                <img src="./assets/images/placeholder/gold.png" alt="" />
+                <span id="player-gold"></span>
+              </li>
+              <li class="potion">
+                <img src="assets/images/placeholder/potion.png" alt="" />
+                <span id="player-potions"></span>
               </li>
             </ul>
-          </div>
-          <ul class="object">
-            <li class="gold">
-              <img src="./assets/images/placeholder/gold.png" alt="" />
-              <span id="player-gold"></span>
-            </li>
-            <li class="potion">
-              <img src="assets/images/placeholder/potion.png" alt="" />
-              <span id="player-potions"></span>
-            </li>
-          </ul>
-        </section>
-
-        <!-- input de comandos e historial  -->
-        <section class="command">
-          <div class="history" id="history">
-            <h2>Historial de eventos</h2>
-            <div>
-              <ul id="historyList"></ul>
-            </div>
-          </div>
-          <div class="input">
-            <input
-              type="text"
-              id="command-input"
-              name="command-input"
-              placeholder="Escribe un comando"
-              autocomplete="off"
-            />
-            <button id="submitCommand">➤</button>
-          </div>
-        </section>
-
-        <!-- menu direccional -->
-        <div class="dpad-container">
-          <section class="dpad">
-            <button class="up" id="up"><span>⇧</span></button>
-            <button class="down" id="down"><span>⇩</span></button>
-            <button class="left" id="left"><span>⇦</span></button>
-            <button class="right" id="right"><span>⇨</span></button>
           </section>
+
+          <!-- input de comandos e historial  -->
+          <section class="command">
+            <div class="history" id="history">
+              <h2>Historial de eventos</h2>
+              <div>
+                <ul id="historyList"></ul>
+              </div>
+            </div>
+            <div class="input">
+              <input
+                type="text"
+                id="command-input"
+                name="command-input"
+                placeholder="Escribe un comando"
+                autocomplete="off"
+              />
+              <button id="submitCommand">➤</button>
+            </div>
+          </section>
+
+          <!-- menu direccional -->
+          <div class="dpad-container">
+            <section class="dpad">
+              <button class="up" id="up"><span>⇧</span></button>
+              <button class="down" id="down"><span>⇩</span></button>
+              <button class="left" id="left"><span>⇦</span></button>
+              <button class="right" id="right"><span>⇨</span></button>
+            </section>
+          </div>
         </div>
+      </div>
+      <div class="hide-after-start" id="start-screen">
+        <video
+          class="hide-after-start"
+          id="intro-video"
+          autoplay
+          loop
+          playsinline
+        >
+          <source src="./assets/videos/intro-video.mp4" type="video/mp4" />
+        </video>
+        <p class="hide-after-start welcomeMessage">
+          Bienvenido a <b>Proyecto RPG</b>, <span id="player-name"></span>
+        </p>
+        <div class="buttonContainer">
+          <button class="hide-after-start" id="start-game">
+            Comenzar juego
+          </button>
+        </div>
+        <img
+          class="hide-after-start"
+          id="start-screen-bg"
+          src="./assets/images/intro-bg.png"
+          alt=""
+        />
       </div>
     </main>
   </body>
